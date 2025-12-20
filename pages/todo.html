@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Smart To-Do | StudyZen</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Fonts & Icons -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/dark.css">
+    <link rel="stylesheet" href="../css/animations.css">
+</head>
+<body>
+
+    <!-- 🌙 Theme Toggle -->
+    <div class="theme-toggle">
+        <i class="fas fa-moon"></i>
+    </div>
+
+    <!-- 🔙 Back -->
+    <a href="../index.html" style="text-decoration:none;color:white;">
+        ← Back to Dashboard
+    </a>
+
+    <!-- 📝 Header -->
+    <header>
+        <h1>📝 Smart To-Do</h1>
+        <p>Manage tasks with priority & discipline</p>
+    </header>
+
+    <!-- 🧊 Main Area -->
+    <main class="dashboard">
+
+        <!-- ➕ Add Task -->
+        <div class="card">
+            <h3>Add New Task</h3>
+
+            <input id="taskInput" type="text" placeholder="Enter task">
+            <br><br>
+
+            <select id="priority">
+                <option value="High">🔴 High</option>
+                <option value="Medium">🟡 Medium</option>
+                <option value="Low">🟢 Low</option>
+            </select>
+            <br><br>
+
+            <input id="dueDate" type="date">
+            <br><br>
+
+            <button id="addTask">Add Task</button>
+        </div>
+
+        <!-- 📋 Task List -->
+        <div class="card">
+            <h3>Your Tasks</h3>
+            <ul id="taskList" style="list-style:none;padding-top:10px;"></ul>
+        </div>
+
+    </main>
+
+    <!-- JS -->
+    <script src="../js/app.js"></script>
+    <script src="../js/todo.js"></script>
+
+</body>
+</html>
