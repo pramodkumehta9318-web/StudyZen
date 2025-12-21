@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Quick Tools | StudyZen</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Fonts & Icons -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/dark.css">
+    <link rel="stylesheet" href="../css/animations.css">
+
+    <style>
+        .tool-card input {
+            margin: 5px 0;
+            padding: 5px;
+            width: 80%;
+        }
+
+        .tool-card button {
+            margin-top: 5px;
+        }
+
+        .tool-result {
+            margin-top: 10px;
+            font-weight: 600;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- 🌙 Theme Toggle -->
+    <div class="theme-toggle">
+        <i class="fas fa-moon"></i>
+    </div>
+
+    <!-- 🔙 Back -->
+    <a href="../index.html" style="text-decoration:none;color:white;">
+        ← Back to Dashboard
+    </a>
+
+    <!-- 🛠 Header -->
+    <header>
+        <h1>🛠 Quick Tools</h1>
+        <p>Percentage, Units, Age & Marks Converter</p>
+    </header>
+
+    <!-- 🧊 Main -->
+    <main class="dashboard">
+
+        <!-- % Calculator -->
+        <div class="card tool-card">
+            <h3>Percentage Calculator</h3>
+            <input type="number" id="percentTotal" placeholder="Total Marks">
+            <input type="number" id="percentObtained" placeholder="Obtained Marks">
+            <br>
+            <button id="calcPercent">Calculate %</button>
+            <div class="tool-result" id="percentResult"></div>
+        </div>
+
+        <!-- Unit Converter -->
+        <div class="card tool-card">
+            <h3>Unit Converter (kg, meter, time)</h3>
+            <input type="number" id="unitInput" placeholder="Value">
+            <select id="unitType">
+                <option value="kgToGram">kg → Gram</option>
+                <option value="gramToKg">Gram → kg</option>
+                <option value="meterToCm">Meter → cm</option>
+                <option value="cmToMeter">cm → Meter</option>
+                <option value="hourToMin">Hour → Minutes</option>
+                <option value="minToHour">Minutes → Hour</option>
+            </select>
+            <br>
+            <button id="convertUnit">Convert</button>
+            <div class="tool-result" id="unitResult"></div>
+        </div>
+
+        <!-- Age Calculator -->
+        <div class="card tool-card">
+            <h3>Age Calculator</h3>
+            <input type="date" id="birthDate">
+            <br>
+            <button id="calcAge">Calculate Age</button>
+            <div class="tool-result" id="ageResult"></div>
+        </div>
+
+        <!-- Marks → Percentage -->
+        <div class="card tool-card">
+            <h3>Marks → Percentage</h3>
+            <input type="number" id="marksObtained" placeholder="Obtained Marks">
+            <input type="number" id="marksTotal" placeholder="Total Marks">
+            <br>
+            <button id="marksPercentBtn">Convert</button>
+            <div class="tool-result" id="marksPercentResult"></div>
+        </div>
+
+    </main>
+
+    <!-- JS -->
+    <script src="../js/app.js"></script>
+    <script src="../js/tools.js"></script>
+
+</body>
+</html>

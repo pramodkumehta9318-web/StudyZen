@@ -1,0 +1,49 @@
+/* 🌙 DARK MODE BODY */
+body.dark {
+    background: linear-gradient(135deg, #050505, #0d0d0d, #1a1a1a);
+    color: #eaeaea;
+}
+
+/* 🌙 HEADER */
+body.dark header p {
+    opacity: 0.7;
+}
+
+/* 🌙 THEME TOGGLE */
+body.dark .theme-toggle {
+    background: rgba(255, 255, 255, 0.1);
+}
+
+/* 🌙 DASHBOARD CARDS */
+body.dark .card {
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+}
+
+body.dark .card:hover {
+    background: rgba(255, 255, 255, 0.15);
+}
+
+/* 🌙 ICON COLOR */
+body.dark .card i {
+    color: #00ffae;
+}
+
+/* 🌙 TEXT */
+body.dark .card p {
+    opacity: 0.75;
+}
+
+/* 🌙 SCROLLBAR (optional pro touch) */
+body.dark::-webkit-scrollbar {
+    width: 8px;
+}
+
+body.dark::-webkit-scrollbar-track {
+    background: #0f0f0f;
+}
+
+body.dark::-webkit-scrollbar-thumb {
+    background: #444;
+    border-radius: 10px;
+}

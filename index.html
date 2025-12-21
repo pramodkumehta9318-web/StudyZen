@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>StudyZen | Smart Student App</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- PWA -->
+    <link rel="manifest" href="manifest.json">
+
+    <!-- Fonts & Icons -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/dark.css">
+    <link rel="stylesheet" href="css/animations.css">
+</head>
+
+<body>
+
+    <!-- 🌙 Theme Toggle -->
+    <div class="theme-toggle">
+        <i class="fas fa-moon"></i>
+    </div>
+
+    <!-- 🔷 Header -->
+    <header>
+        <h1>📘 StudyZen</h1>
+        <p>Smart Planner • AI Assistant • Focus System</p>
+    </header>
+
+    <!-- 🧊 Dashboard -->
+    <main class="dashboard">
+
+        <a href="pages/planner.html" class="card">
+            <i class="fas fa-book"></i>
+            <h3>Study Planner</h3>
+            <p>Plan & track daily study</p>
+        </a>
+
+        <a href="pages/todo.html" class="card">
+            <i class="fas fa-check-circle"></i>
+            <h3>Smart To-Do</h3>
+            <p>Tasks with priority</p>
+        </a>
+
+        <a href="pages/expense.html" class="card">
+            <i class="fas fa-wallet"></i>
+            <h3>Expense Tracker</h3>
+            <p>Money tracking + charts</p>
+        </a>
+
+        <a href="pages/tools.html" class="card">
+            <i class="fas fa-calculator"></i>
+            <h3>Quick Tools</h3>
+            <p>Calculators & converters</p>
+        </a>
+
+        <a href="pages/focus.html" class="card">
+            <i class="fas fa-clock"></i>
+            <h3>Focus Mode</h3>
+            <p>Smart Pomodoro + streak</p>
+        </a>
+
+    </main>
+
+    <!-- 🤖 STUDYZEN AI PANEL -->
+    <section class="dashboard">
+        <div class="card" style="max-width:520px;margin:auto;">
+            <h3>🤖 StudyZen AI</h3>
+
+            <div id="aiMessages"
+                 style="height:220px;overflow-y:auto;
+                 background:rgba(255,255,255,0.1);
+                 padding:10px;border-radius:10px;margin-bottom:10px;">
+            </div>
+
+            <input id="aiInput" placeholder="Ask StudyZen AI..." />
+            <br><br>
+            <button onclick="sendAI()">Send</button>
+
+            <p style="font-size:12px;opacity:0.7;margin-top:8px;">
+                Try: “Aaj kya padhna chahiye”, “Pomodoro start karo”
+            </p>
+        </div>
+    </section>
+
+    <!-- 🔌 JS FILES (ORDER MATTERS) -->
+    <script src="js/app.js"></script>
+
+    <!-- AI + Intelligence -->
+    <script src="js/studyzen-ai.js"></script>
+    <script src="js/risk-engine.js"></script>
+
+    <!-- 🔥 AUTO RISK CHECK -->
+    <script>
+        showRiskAlert();
+    </script>
+
+    <!-- 📦 SERVICE WORKER (PWA) -->
+    <script>
+        if ("serviceWorker" in navigator) {
+            navigator.serviceWorker.register("service-worker.js");
+        }
+    </script>
+
+</body>
+</html>

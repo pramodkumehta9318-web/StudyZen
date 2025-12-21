@@ -1,0 +1,62 @@
+/* 🔹 PAGE FADE IN */
+body {
+    animation: pageFade 0.8s ease-in-out;
+}
+
+@keyframes pageFade {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* 🔹 CARD ENTRY ANIMATION */
+.card {
+    animation: cardSlide 0.7s ease forwards;
+}
+
+@keyframes cardSlide {
+    from {
+        opacity: 0;
+        transform: translateY(25px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* 🔹 CARD HOVER GLOW */
+.card:hover {
+    box-shadow: 0 15px 30px rgba(0, 255, 213, 0.25);
+}
+
+/* 🔹 ICON FLOAT */
+.card i {
+    animation: floatIcon 2.5s ease-in-out infinite;
+}
+
+@keyframes floatIcon {
+    0%, 100% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-6px);
+    }
+}
+
+/* 🔹 BUTTON / TOGGLE CLICK FEEDBACK */
+.theme-toggle:active {
+    transform: scale(0.9);
+}
+
+/* 🔹 SMOOTH TRANSITION FOR THEME */
+body,
+.card,
+.theme-toggle {
+    transition: background 0.4s ease, color 0.4s ease;
+}
