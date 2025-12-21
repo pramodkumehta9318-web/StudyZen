@@ -1,81 +1,51 @@
-// 🎯 FOCUS MODE - POMODORO TIMER
+let focus = 25 * 60;
+let shortBreak = 5 * 60;
+let longBreak = 15 * 60;
 
-let studyTime = 25 * 60; // 25 minutes
-let breakTime = 5 * 60; // 5 minutes
-let timeLeft = studyTime;
-let timerInterval = null;
-let isStudy = true;
+let time = focus;
+let timer;
+let sessions = 0;
 
-const timerDisplay = document.getElementById("timer");
-const modeText = document.getElementById("modeText");
-const sessionInfo = document.getElementById("sessionInfo");
+let streak = Number(localStorage.getItem("studyzen-streak")) || 0;
+let breakCount = Number(localStorage.getItem("studyzen-break-count")) || 0;
 
-const startBtn = document.getElementById("startBtn");
-const pauseBtn = document.getElementById("pauseBtn");
-const resetBtn = document.getElementById("resetBtn");
+const display = document.getElementById("timer");
+const mode = document.getElementById("modeText");
 
-// Format time
-function formatTime(seconds) {
-    const min = Math.floor(seconds / 60);
-    const sec = seconds % 60;
-    return `${min}:${sec < 10 ? "0" : ""}${sec}`;
-}
-
-// Update UI
-function updateDisplay() {
-    timerDisplay.innerText = formatTime(timeLeft);
-}
-
-// Start timer
-startBtn.addEventListener("click", () => {
-    if (timerInterval) return;
-
-    timerInterval = setInterval(() => {
-        timeLeft--;
-        updateDisplay();
-
-        if (timeLeft <= 0) {
-            clearInterval(timerInterval);
-            timerInterval = null;
-            switchMode();
-        }
+function start() {
+    if (timer) return;
+    timer = setInterval(() => {
+        time--;
+        display.innerText = format(time);
+        if (time <= 0) switchMode();
     }, 1000);
-});
-
-// Pause timer
-pauseBtn.addEventListener("click", () => {
-    clearInterval(timerInterval);
-    timerInterval = null;
-});
-
-// Reset timer
-resetBtn.addEventListener("click", () => {
-    clearInterval(timerInterval);
-    timerInterval = null;
-    isStudy = true;
-    timeLeft = studyTime;
-    modeText.innerText = "Study Time";
-    sessionInfo.innerText = "Focus for 25 minutes";
-    updateDisplay();
-});
-
-// Switch between study & break
-function switchMode() {
-    if (isStudy) {
-        isStudy = false;
-        timeLeft = breakTime;
-        modeText.innerText = "Break Time ☕";
-        sessionInfo.innerText = "Relax for 5 minutes";
-        alert("⏰ Study complete! Take a break.");
-    } else {
-        isStudy = true;
-        timeLeft = studyTime;
-        modeText.innerText = "Study Time 📘";
-        sessionInfo.innerText = "Focus for 25 minutes";
-        alert("🔥 Break over! Back to study.");
-    }
-    updateDisplay();
 }
 
-// Initial display
-updateDisplay();
+function switchMode() {
+    clearInterval(timer);
+    timer = null;
+
+    if (mode.innerText.includes("Study")) {
+        streak++;
+        sessions++;
+        localStorage.setItem("studyzen-streak", streak);
+        localStorage.setItem("studyzen-last-study-date", new Date().toDateString());
+
+        if (sessions % 4 === 0) {
+            time = longBreak;
+            mode.innerText = "Long Break 😴";
+        } else {
+            time = shortBreak;
+            mode.innerText = "Short Break ☕";
+        }
+        breakCount++;
+        localStorage.setItem("studyzen-break-count", breakCount);
+    } else {
+        time = focus;
+        mode.innerText = "Study Time 📘";
+    }
+}
+
+function format(s) {
+    return Math.floor(s / 60) + ":" + (s % 60).toString().padStart(2, "0");
+}
