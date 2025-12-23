@@ -1,0 +1,486 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Maths Learner | StudyZen</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Fonts & Icons -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/dark.css">
+    <link rel="stylesheet" href="../css/animations.css">
+
+    <style>
+        body {
+            background: #0b0c10;
+            color: white;
+            font-family: 'Poppins', sans-serif;
+        }
+        header, .topic-card {
+            text-align: center;
+        }
+        .topic-card {
+            margin: 15px 0;
+            padding: 20px;
+            background: rgba(255,255,255,0.05);
+            border-radius: 12px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+        .topic-card:hover {
+            background: rgba(255,255,255,0.12);
+        }
+        .lesson-content {
+            margin-top: 10px;
+            padding: 12px;
+            display: none;
+            background: rgba(255,255,255,0.1);
+            border-radius: 8px;
+            text-align: left;
+        }
+        h1,h3 { margin-bottom: 8px; }
+        code { background: rgba(0,0,0,0.2); padding: 2px 5px; border-radius: 4px; }
+        ul { margin-left: 20px; }
+    </style>
+</head>
+<body>
+
+    <!-- 🔙 Back -->
+    <a href="../index.html" style="text-decoration:none;color:white;font-size:16px;margin-left:10px;display:inline-block;">
+        ← Back to Dashboard
+    </a>
+
+    <header>
+        <h1>Maths Learner</h1>
+        <p>Full formulas & examples in simple Hindlish</p>
+    </header>
+
+    <main style="max-width:700px;margin:auto;">
+
+        <!-- 1. Simple & Compound Interest -->
+<div class="topic-card" onclick="toggleLesson('interest')">
+    <h3>1. Simple & Compound Interest</h3>
+    <div class="lesson-content" id="interest">
+
+        <h4>Simple Interest (SI)</h4>
+        <p>Interest is calculated only on the original principal.</p>
+        <ul>
+            <li>Simple Interest Formula: <code>SI = P × R × T</code><br>
+                Example: P=1000, R=5% per year, T=2 years → SI = 1000×0.05×2 = 100
+            </li>
+            <li>Total Amount (A): <code>A = P + SI</code> or <code>A = P(1 + R×T)</code><br>
+                Example: A = 1000 + 100 = 1100
+            </li>
+            <li>Find Rate (R): <code>R = (SI × 100) ÷ (P × T)</code></li>
+            <li>Find Time (T): <code>T = (SI × 100) ÷ (P × R)</code></li>
+        </ul>
+
+        <h4>Compound Interest (CI)</h4>
+        <p>Interest is calculated on principal + previously earned interest, making it grow faster.</p>
+        <ul>
+            <li>Total Amount (A): <code>A = P × (1 + r/n)^(n×t)</code></li>
+            <li>Compound Interest (CI): <code>CI = A - P = P × (1 + r/n)^(n×t) - P</code></li>
+            <li>Variables:
+                <ul>
+                    <li>P = Principal (initial amount)</li>
+                    <li>r = Annual interest rate (as decimal, e.g., 5% = 0.05)</li>
+                    <li>n = Number of compounding periods per year (e.g., 1 for yearly, 12 for monthly)</li>
+                    <li>t = Time in years</li>
+                </ul>
+            </li>
+            <li>Example: P=1000, r=5% per year, n=1 (yearly), t=2 → A = 1000×(1+0.05)^2 = 1102.5, CI = 102.5</li>
+        </ul>
+
+        <h4>Key Difference</h4>
+        <ul>
+            <li>SI → Interest is fixed on principal only.</li>
+            <li>CI → Interest is on principal + accumulated interest (exponential growth).</li>
+        </ul>
+
+    </div>
+</div>
+
+        <!-- 2. Profit & Loss -->
+<div class="topic-card" onclick="toggleLesson('profitloss')">
+    <h3>2. Profit & Loss</h3>
+    <div class="lesson-content" id="profitloss">
+
+        <h4>Basic Formulas</h4>
+        <ul>
+            <li>Profit: <code>SP - CP</code> (if SP > CP)<br>
+                Example: CP = 500, SP = 600 → Profit = 600-500 = 100
+            </li>
+            <li>Loss: <code>CP - SP</code> (if CP > SP)<br>
+                Example: CP = 700, SP = 600 → Loss = 700-600 = 100
+            </li>
+            <li>Profit %: <code>(Profit ÷ CP) × 100</code><br>
+                Example: 100 ÷ 500 × 100 = 20%
+            </li>
+            <li>Loss %: <code>(Loss ÷ CP) × 100</code><br>
+                Example: 100 ÷ 700 × 100 ≈ 14.29%
+            </li>
+        </ul>
+
+        <h4>Calculating SP or CP Using Percentages</h4>
+        <ul>
+            <li>Selling Price with Profit %: <code>SP = (100 + Profit%) ÷ 100 × CP</code></li>
+            <li>Selling Price with Loss %: <code>SP = (100 - Loss%) ÷ 100 × CP</code></li>
+            <li>Cost Price with Profit %: <code>CP = 100 ÷ (100 + Profit%) × SP</code></li>
+            <li>Cost Price with Loss %: <code>CP = 100 ÷ (100 - Loss%) × SP</code></li>
+        </ul>
+
+        <h4>Discount Formulas (Marked Price MP)</h4>
+        <ul>
+            <li>Discount Amount: <code>MP - SP</code></li>
+            <li>Discount %: <code>(Discount ÷ MP) × 100</code></li>
+            <li>Selling Price with Discount: <code>SP = MP - Discount</code> or <code>SP = MP × (100 - Discount%) ÷ 100</code></li>
+        </ul>
+
+        <h4>Special & Advanced Cases</h4>
+        <ul>
+            <li>Successive Profits (m% & n%): <code>Net % = m + n + (m×n)/100</code></li>
+            <li>Successive Profit (m%) & Loss (n%): <code>Net % = m - n - (m×n)/100</code> 
+                <br>Positive → % loss, Negative → % profit
+            </li>
+            <li>Profit % & Loss % Equal (P%): <code>Net Loss % = P² / 100</code></li>
+            <li>False Weight Profit %: <code>(True Weight - False Weight) ÷ False Weight × 100</code></li>
+        </ul>
+
+        <p>💡 Tip: Always identify whether it’s a Profit, Loss, or Discount problem before applying the formula.</p>
+
+    </div>
+</div>
+
+
+        <!-- 3. Mensuration -->
+<div class="topic-card" onclick="toggleLesson('mensuration')">
+    <h3>3. Mensuration (2D & 3D Shapes)</h3>
+    <div class="lesson-content" id="mensuration">
+
+        <h4>2D Shapes (Area & Perimeter)</h4>
+        <ul>
+            <li><strong>Rectangle:</strong> Area = l×b, Perimeter = 2(l+b), Diagonal = √(l²+b²)<br>
+                Example: L=8, B=5 → A=40, P=26, D=√(64+25)=√89≈9.43
+            </li>
+            <li><strong>Square:</strong> Area = a², Perimeter = 4a, Diagonal = √2×a<br>
+                Example: a=6 → A=36, P=24, D=√2×6≈8.49
+            </li>
+            <li><strong>Triangle (General):</strong> Area = 1/2×base×height, Perimeter = a+b+c<br>
+                Example: b=10, h=6, sides=10,8,6 → A=30, P=24
+            </li>
+            <li><strong>Equilateral Triangle:</strong> Area = √3/4 × a², Perimeter = 3a<br>
+                Example: a=6 → A≈15.59, P=18
+            </li>
+            <li><strong>Circle:</strong> Area = πr², Circumference = 2πr<br>
+                Example: r=7 → A≈153.94, C≈43.96
+            </li>
+            <li><strong>Parallelogram:</strong> Area = base×height, Perimeter = 2(a+b)<br>
+                Example: base=10, height=6, sides=10,8 → A=60, P=36
+            </li>
+            <li><strong>Rhombus:</strong> Area = 1/2×d1×d2, Perimeter = 4×side<br>
+                Example: d1=8, d2=6, side=5 → A=24, P=20
+            </li>
+            <li><strong>Trapezium:</strong> Area = 1/2×h(a+c), Perimeter = sum of all sides<br>
+                Example: a=8, c=6, h=5, other sides=5,7 → A=35, P=8+6+5+7=26
+            </li>
+        </ul>
+
+        <h4>3D Shapes (Volume & Surface Area)</h4>
+        <ul>
+            <li><strong>Cube:</strong> Volume = a³, TSA = 6a²<br>
+                Example: a=4 → V=64, TSA=96
+            </li>
+            <li><strong>Cuboid:</strong> Volume = l×b×h, TSA = 2(lb+bh+hl), Diagonal = √(l²+b²+h²)<br>
+                Example: L=5,B=4,H=3 → V=60, TSA=94, D=√(25+16+9)=√50≈7.07
+            </li>
+            <li><strong>Cylinder:</strong> Volume = πr²h, TSA = 2πr(h+r), CSA = 2πrh<br>
+                Example: r=3, h=7 → V≈197.82, TSA≈188.4, CSA≈131.94
+            </li>
+            <li><strong>Cone:</strong> Volume = 1/3 π r² h, TSA = π r(r+l), CSA = π r l, Slant height l = √(r²+h²)<br>
+                Example: r=3, h=4 → l=5, V≈37.7, TSA≈75.4, CSA≈47.1
+            </li>
+            <li><strong>Sphere:</strong> Volume = 4/3 π r³, TSA = 4π r²<br>
+                Example: r=5 → V≈523.6, TSA≈314
+            </li>
+            <li><strong>Hemisphere:</strong> Volume = 2/3 π r³, TSA = 3π r², CSA = 2π r²<br>
+                Example: r=5 → V≈261.8, TSA≈235.5, CSA≈157
+            </li>
+        </ul>
+
+        <p>✨ <strong>Tips:</strong> Always note diagonals & slant heights; these are key for solving dimensions, surface areas, and volumes quickly.</p>
+    </div>
+</div>
+
+
+        <!-- 4. Percentage -->
+<div class="topic-card" onclick="toggleLesson('percentage')">
+    <h3>4. Percentage</h3>
+    <div class="lesson-content" id="percentage">
+
+        <h4>Basic Percentage Formulas</h4>
+        <ul>
+            <li>To find a Percentage: <code>(Value ÷ Total Value) × 100</code><br>
+                Example: Marks scored = 45, Total = 60 → 45/60×100 = 75%
+            </li>
+            <li>To Find a Value from a Percentage: <code>(Percentage ÷ 100) × Total Value</code><br>
+                Example: 20% of 500 → 20/100 × 500 = 100
+            </li>
+            <li>To Find What % of 'a' is 'b': <code>(b ÷ a) × 100</code><br>
+                Example: b=30, a=150 → 30/150×100 = 20%
+            </li>
+        </ul>
+
+        <h4>Percentage Change Formulas</h4>
+        <ul>
+            <li>Percentage Increase/Decrease: <code>[(New Value - Original Value) ÷ Original Value] × 100</code><br>
+                Example: Price goes from $100 to $120 → (120-100)/100 × 100 = 20% increase
+            </li>
+            <li>Percentage Difference (between two values): <code>(|Value1 - Value2| ÷ Average of Values) × 100</code><br>
+                Example: 50 and 70 → |70-50| ÷ ((70+50)/2) ×100 = 20 ÷ 60 ×100 ≈ 33.33%
+            </li>
+        </ul>
+
+        <h4>Successive Percentage Change</h4>
+        <ul>
+            <li>Effective % Change for two successive changes x% and y%: <code>x + y + (x*y)/100</code><br>
+                Example: Price increases 10% then 20% → 10 + 20 + (10*20)/100 = 32% increase
+            </li>
+            <li>Successive Discount: <code>x + y - (x*y)/100</code><br>
+                Example: 10% and 20% discount → 10+20-(10*20)/100 = 28% discount
+            </li>
+        </ul>
+
+        <h4>Population & Depreciation Formulas</h4>
+        <ul>
+            <li>Future Population after n years at R% increase: <code>P × (1 + R/100)^n</code><br>
+                Example: P=1000, R=5%, n=2 → 1000 × 1.05² = 1102.5
+            </li>
+            <li>Past Population n years ago at R% increase: <code>P ÷ (1 + R/100)^n</code><br>
+                Example: Current population = 1102.5, R=5%, n=2 → 1102.5 ÷ 1.05² = 1000
+            </li>
+        </ul>
+
+        <h4>Quick Conversion</h4>
+        <ul>
+            <li>Percentage to Fraction: Divide by 100<br>
+                Example: 25% → 25/100 = 1/4
+            </li>
+            <li>Percentage to Decimal: Divide by 100<br>
+                Example: 75% → 0.75
+            </li>
+        </ul>
+
+        <p>✨ Tip: Use positive values for increases, negative for decreases when applying formulas.</p>
+
+    </div>
+</div>
+<!-- 5. Ratio, Proportion & Partnership -->
+<div class="topic-card" onclick="toggleLesson('ratio')">
+    <h3>5. Ratio, Proportion & Partnership</h3>
+    <div class="lesson-content" id="ratio">
+
+        <h4>Basic Ratios</h4>
+        <ul>
+            <li>Ratio of a to b: <code>a : b</code></li>
+            <li>Equivalent ratios: Multiply/divide both terms by same number → <code>a:b = ka:kb</code></li>
+        </ul>
+
+        <h4>Proportion</h4>
+        <ul>
+            <li>If a:b = c:d → <code>a×d = b×c</code> (cross-multiplication)</li>
+            <li>Chain Rule Example: a:b = b:c = c:d → a:d = ?</li>
+        </ul>
+
+        <h4>Partnership</h4>
+        <ul>
+            <li>Profit Sharing = Ratio of Investments × Time</li>
+            <li>Example: A invests 1000 for 6 months, B invests 1500 for 4 months → Share = 1000×6 : 1500×4 = 6000 : 6000 = 1:1</li>
+        </ul>
+
+        <h4>Age, Population, Election Problems</h4>
+        <ul>
+            <li>Age: Use ratios and differences → Current Age = Ratio × Total</li>
+            <li>Population Growth: P = P₀ × (1 + r/100)^t</li>
+            <li>Election: Votes shared in ratio, total votes = sum of parts</li>
+        </ul>
+    </div>
+</div>
+
+<!-- 6. Time, Speed & Distance -->
+<div class="topic-card" onclick="toggleLesson('tsd')">
+    <h3>6. Time, Speed & Distance (TSD)</h3>
+    <div class="lesson-content" id="tsd">
+
+        <h4>Basic Formula</h4>
+        <ul>
+            <li>Speed = Distance ÷ Time</li>
+            <li>Time = Distance ÷ Speed</li>
+            <li>Distance = Speed × Time</li>
+        </ul>
+
+        <h4>Trains, Boats & Streams</h4>
+        <ul>
+            <li>Boat in Stream: Upstream = Speed_boat - Speed_stream, Downstream = Speed_boat + Speed_stream</li>
+            <li>Trains: Relative Speed = Sum of speeds if opposite, Difference if same direction</li>
+        </ul>
+
+        <h4>Average Speed</h4>
+        <ul>
+            <li>Average Speed = Total Distance ÷ Total Time</li>
+        </ul>
+
+        <h4>Example</h4>
+        <li>Train A travels 60 km in 1h, Train B travels 120 km in 2h → Average Speed = (60+120)/(1+2) = 60 km/h</li>
+    </div>
+</div>
+
+<!-- 7. Time & Work -->
+<div class="topic-card" onclick="toggleLesson('work')">
+    <h3>7. Time & Work</h3>
+    <div class="lesson-content" id="work">
+
+        <h4>Basic Formula</h4>
+        <ul>
+            <li>Work Done = Rate × Time</li>
+            <li>Time = Total Work ÷ Rate</li>
+            <li>Rate = Work ÷ Time</li>
+        </ul>
+
+        <h4>Pipes & Cisterns</h4>
+        <ul>
+            <li>Fill = +Rate, Empty = -Rate</li>
+            <li>Example: Pipe fills 100L in 5h → Rate = 100/5 = 20 L/h</li>
+            <li>Two pipes: Net Rate = Sum of individual rates (taking empty pipes negative)</li>
+        </ul>
+
+        <h4>Work & Wages</h4>
+        <ul>
+            <li>Wage sharing = Work done × Rate per unit work</li>
+        </ul>
+
+    </div>
+</div>
+
+<!-- 8. Average, Mixtures & Alligation -->
+<div class="topic-card" onclick="toggleLesson('average')">
+    <h3>8. Average, Mixtures & Alligation</h3>
+    <div class="lesson-content" id="average">
+
+        <h4>Average</h4>
+        <ul>
+            <li>Average = Sum of values ÷ Number of values</li>
+            <li>Example: 10, 15, 20 → Avg = (10+15+20)/3 = 15</li>
+        </ul>
+
+        <h4>Mixtures</h4>
+        <ul>
+            <li>Total Quantity = Sum of individual quantities</li>
+            <li>Concentration = Part ÷ Total × 100</li>
+            <li>Example: 2L juice (10% sugar) + 3L juice (20% sugar) → Sugar = (0.2+0.6)/5 = 16%</li>
+        </ul>
+
+        <h4>Alligation</h4>
+        <ul>
+            <li>Used to find ratio of two solutions to get desired mean value</li>
+            <li>Formula: Higher Concentration - Mean : Mean - Lower Concentration</li>
+            <li>Example: Mix 10% and 30% solution to get 20% → Ratio = 30-20 : 20-10 = 10:10 = 1:1</li>
+        </ul>
+
+    </div>
+</div>
+<!-- 9. Advanced Trigonometry, Complex Numbers & Conics -->
+<div class="topic-card" onclick="toggleLesson('trig-advanced')">
+    <h3>9. Trigonometry, Complex Numbers & Conics</h3>
+    <div class="lesson-content" id="trig-advanced">
+
+        <h4>1. Trig Functions (Right Triangle)</h4>
+        <ul>
+            <li>sin θ = Opposite / Hypotenuse</li>
+            <li>cos θ = Adjacent / Hypotenuse</li>
+            <li>tan θ = Opposite / Adjacent</li>
+            <li>cosec θ = 1 / sin θ, sec θ = 1 / cos θ, cot θ = 1 / tan θ</li>
+        </ul>
+
+        <h4>2. Unit Circle Trig</h4>
+        <ul>
+            <li>sin θ = y, cos θ = x, tan θ = y / x, csc θ = 1/y, sec θ = 1/x, cot θ = x / y</li>
+            <li>Example: cos(7π/6) = -√3/2, sin(7π/6) = -1/2</li>
+        </ul>
+
+        <h4>3. Domains & Ranges</h4>
+        <ul>
+            <li>sin θ, cos θ: ∀ θ ∈ (−∞,∞)</li>
+            <li>tan θ: θ ≠ π/2 + nπ</li>
+            <li>csc θ: θ ≠ nπ</li>
+            <li>sec θ: θ ≠ π/2 + nπ</li>
+            <li>cot θ: θ ≠ nπ</li>
+        </ul>
+
+        <h4>4. Important Identities</h4>
+        <ul>
+            <li>Pythagoras: sin²θ + cos²θ = 1</li>
+            <li>1 + tan²θ = sec²θ, 1 + cot²θ = csc²θ</li>
+            <li>Even/Odd: sin(-θ) = -sinθ, cos(-θ) = cosθ</li>
+            <li>Double angle: sin(2θ)=2sinθcosθ, cos(2θ)=cos²θ-sin²θ, tan(2θ)=2tanθ/(1-tan²θ)</li>
+            <li>Sum & Difference: sin(α±β)=sinαcosβ±cosαsinβ, cos(α±β)=cosαcosβ∓sinαsinβ</li>
+        </ul>
+
+        <h4>5. Inverse Trig Functions</h4>
+        <ul>
+            <li>sin⁻¹(x), cos⁻¹(x), tan⁻¹(x)</li>
+            <li>Domains: sin⁻¹, cos⁻¹: [-1,1], tan⁻¹: (-∞,∞)</li>
+            <li>Example: θ = sin⁻¹(1/2) → θ = 30°</li>
+        </ul>
+
+        <h4>6. Law of Sines, Cosines, Tangents</h4>
+        <ul>
+            <li>Law of Sines: sinα/a = sinβ/b = sinγ/c</li>
+            <li>Law of Cosines: a² = b² + c² - 2bc cosα</li>
+            <li>Law of Tangents: (a-b)/(a+b) = tan½(α-β)/tan½(α+β)</li>
+        </ul>
+
+        <h4>7. Complex Numbers & DeMoivre’s Theorem</h4>
+        <ul>
+            <li>i = √-1, i²=-1, i³=-i, i⁴=1</li>
+            <li>z = a + bi, |z| = √(a²+b²)</li>
+            <li>DeMoivre: zⁿ = rⁿ (cos nθ + i sin nθ)</li>
+            <li>Example: (1-i)⁶ = 8i</li>
+        </ul>
+
+        <h4>8. Conic Sections</h4>
+        <ul>
+            <li>Circle: (x-h)² + (y-k)² = r²</li>
+            <li>Ellipse: (x-h)²/a² + (y-k)²/b² = 1</li>
+            <li>Hyperbola: (x-h)²/a² - (y-k)²/b² = 1</li>
+            <li>Parabola: y = a(x-h)² + k</li>
+        </ul>
+
+        <h4>9. Examples</h4>
+        <ul>
+            <li>sin 5π/4 = -√2/2</li>
+            <li>cos 7π/6 = -√3/2</li>
+            <li>tan 210° = 1/√3</li>
+            <li>Complex root: 4^(1/4) → √2, √2i, -√2, -√2i</li>
+        </ul>
+
+        <p>💡 Tip: Use unit circle & triangle diagrams to visualize trig values. Always convert between degrees & radians when needed.</p>
+
+    </div>
+</div>
+
+
+    </main>
+
+    <script>
+        function toggleLesson(id) {
+            const el = document.getElementById(id);
+            el.style.display = el.style.display === "block" ? "none" : "block";
+        }
+    </script>
+
+</body>
+</html>

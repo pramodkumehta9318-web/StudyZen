@@ -16,19 +16,25 @@
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/dark.css">
     <link rel="stylesheet" href="css/animations.css">
+  
 </head>
 
 <body>
 
-    <!-- 🌙 Theme Toggle -->
+    <!-- 🌙 Dark Mode Toggle -->
     <div class="theme-toggle">
         <i class="fas fa-moon"></i>
+    </div>
+
+    <!-- 🎵 Music Toggle -->
+    <div class="music-toggle">
+        <i class="fas fa-music"></i>
     </div>
 
     <!-- 🔷 Header -->
     <header>
         <h1>📘 StudyZen</h1>
-        <p>Smart Planner • AI Assistant • Focus System</p>
+        <p>AI • Focus • Productivity • Discipline</p>
     </header>
 
     <!-- 🧊 Dashboard -->
@@ -37,36 +43,43 @@
         <a href="pages/planner.html" class="card">
             <i class="fas fa-book"></i>
             <h3>Study Planner</h3>
-            <p>Plan & track daily study</p>
+            <p>Plan daily study</p>
         </a>
 
         <a href="pages/todo.html" class="card">
             <i class="fas fa-check-circle"></i>
             <h3>Smart To-Do</h3>
-            <p>Tasks with priority</p>
+            <p>Tasks & priorities</p>
         </a>
 
         <a href="pages/expense.html" class="card">
             <i class="fas fa-wallet"></i>
             <h3>Expense Tracker</h3>
-            <p>Money tracking + charts</p>
+            <p>Money + charts</p>
         </a>
 
         <a href="pages/tools.html" class="card">
             <i class="fas fa-calculator"></i>
             <h3>Quick Tools</h3>
-            <p>Calculators & converters</p>
+            <p>Daily calculators</p>
         </a>
 
         <a href="pages/focus.html" class="card">
             <i class="fas fa-clock"></i>
             <h3>Focus Mode</h3>
-            <p>Smart Pomodoro + streak</p>
+            <p>Smart Pomodoro</p>
+        </a>
+
+        <!-- 🧮 Math Learner Button -->
+        <a href="pages/math-learner.html" class="card">
+            <i class="fas fa-square-root-alt"></i>
+            <h3>Math Learner</h3>
+            <p>Formulas, Tricks & Examples</p>
         </a>
 
     </main>
 
-    <!-- 🤖 STUDYZEN AI PANEL -->
+    <!-- 🤖 STUDYZEN AI -->
     <section class="dashboard">
         <div class="card" style="max-width:520px;margin:auto;">
             <h3>🤖 StudyZen AI</h3>
@@ -81,25 +94,54 @@
             <br><br>
             <button onclick="sendAI()">Send</button>
 
-            <p style="font-size:12px;opacity:0.7;margin-top:8px;">
+            <p style="font-size:12px;opacity:0.7;">
                 Try: “Aaj kya padhna chahiye”, “Pomodoro start karo”
             </p>
         </div>
     </section>
 
-    <!-- 🔌 JS FILES (ORDER MATTERS) -->
+    <!-- 🧠 MANUAL AI INPUT -->
+    <section class="dashboard">
+        <div class="card" style="max-width:520px;margin:auto;">
+            <h3>🧠 Manual AI Input</h3>
+
+            <textarea id="manualReason"
+                placeholder="Apna situation likho (e.g. Kal bimaar tha, exam aa raha hai)"
+                style="width:100%;height:80px;"></textarea>
+
+            <br><br>
+            <button onclick="saveManualReason()">Include in AI Analysis</button>
+
+            <p style="font-size:12px;opacity:0.7;">
+                Ye AI decision me include hoga
+            </p>
+        </div>
+    </section>
+
+    <!-- 🔌 JS FILES (ORDER IS VERY IMPORTANT) -->
     <script src="js/app.js"></script>
-
-    <!-- AI + Intelligence -->
     <script src="js/studyzen-ai.js"></script>
-    <script src="js/risk-engine.js"></script>
 
-    <!-- 🔥 AUTO RISK CHECK -->
+    <!-- 🧠 Intelligence Engines -->
+    <script src="js/risk-engine.js"></script>
+    <script src="js/daily-mission.js"></script>
+    <script src="js/mission-explainer.js"></script>
+    <script src="js/voice-ai.js"></script>
+    <script src="js/manual-ai.js"></script>
+    <script src="js/adaptive-engine.js"></script>
+
+    <!-- 🚨 AUTO INTELLIGENCE -->
     <script>
         showRiskAlert();
+        showDailyMission();
+
+        setTimeout(() => explainMission(), 600);
+        setTimeout(() => explainMissionWithVoice(), 1400);
+
+        applyAdaptiveMode();
     </script>
 
-    <!-- 📦 SERVICE WORKER (PWA) -->
+    <!-- 📦 PWA SERVICE WORKER -->
     <script>
         if ("serviceWorker" in navigator) {
             navigator.serviceWorker.register("service-worker.js");

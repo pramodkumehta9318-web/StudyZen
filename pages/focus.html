@@ -16,7 +16,7 @@
 
     <style>
         .focus-container {
-            max-width: 400px;
+            max-width: 420px;
             margin: auto;
             text-align: center;
         }
@@ -27,10 +27,18 @@
         }
 
         .focus-buttons button {
-            margin: 8px;
+            margin: 6px;
+            padding: 10px 16px;
+        }
+
+        select {
+            padding: 8px;
+            border-radius: 6px;
+            margin-top: 10px;
         }
     </style>
 </head>
+
 <body>
 
     <!-- 🌙 Theme Toggle -->
@@ -46,24 +54,37 @@
     <!-- 🎯 Header -->
     <header>
         <h1>🎯 Focus Mode</h1>
-        <p>Pomodoro • No distraction • Deep study</p>
+        <p>Pomodoro • Brain Waves • Deep Study</p>
     </header>
 
     <!-- 🧊 Focus Area -->
     <main class="dashboard">
         <div class="card focus-container">
-            <h3 id="modeText">Study Time</h3>
+
+            <h3 id="modeText">Study Time 📘</h3>
             <div class="timer" id="timer">25:00</div>
 
             <div class="focus-buttons">
-                <button id="startBtn">Start</button>
-                <button id="pauseBtn">Pause</button>
-                <button id="resetBtn">Reset</button>
+                <button id="startBtn">▶ Start</button>
+                <button id="pauseBtn">⏸ Pause</button>
+                <button id="resetBtn">🔁 Reset</button>
             </div>
 
-            <p id="sessionInfo">Focus for 25 minutes</p>
+            <!-- 🧠 Brain Wave Selector -->
+            <p style="margin-top:12px;">🧠 Brain Wave</p>
+            <select id="waveSelect">
+                <option value="theta">Theta (Deep Focus)</option>
+                <option value="alpha">Alpha (Calm Study)</option>
+                <option value="beta">Beta (High Alert)</option>
+            </select>
+
+            <p id="sessionInfo">Select wave & start focus 🔥</p>
+
         </div>
     </main>
+
+    <!-- 🎧 AUDIO -->
+    <audio id="brainAudio" loop></audio>
 
     <!-- JS -->
     <script src="../js/app.js"></script>

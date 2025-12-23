@@ -1,0 +1,115 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Orbitron", monospace;
+}
+
+body {
+    background: black;
+    color: #00f2ff;
+    height: 100vh;
+    overflow: hidden;
+}
+
+/* SCANLINES EFFECT */
+.scanlines {
+    position: fixed;
+    inset: 0;
+    background: repeating-linear-gradient(
+        to bottom,
+        rgba(255,255,255,0.03),
+        rgba(255,255,255,0.03) 1px,
+        transparent 1px,
+        transparent 3px
+    );
+    pointer-events: none;
+    animation: flicker 3s infinite;
+}
+
+/* MAIN */
+.boot-screen {
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+/* GLITCH LOGO */
+.glitch {
+    font-size: 3.2rem;
+    position: relative;
+    color: #00f2ff;
+    animation: glitch 2s infinite;
+}
+
+.glitch::before,
+.glitch::after {
+    content: attr(data-text);
+    position: absolute;
+    left: 0;
+    top: 0;
+    opacity: 0.8;
+}
+
+.glitch::before {
+    color: red;
+    transform: translate(2px, -2px);
+}
+
+.glitch::after {
+    color: blue;
+    transform: translate(-2px, 2px);
+}
+
+/* TEXT */
+.boot-text {
+    margin: 20px 0;
+    font-size: 1rem;
+    opacity: 0.85;
+}
+
+/* PROGRESS BAR */
+.progress-box {
+    width: 320px;
+    height: 14px;
+    border: 1px solid #00f2ff;
+    margin-top: 15px;
+}
+
+.progress-bar {
+    height: 100%;
+    width: 0%;
+    background: linear-gradient(90deg, #00f2ff, #00ff88);
+    transition: width 0.2s ease;
+}
+
+/* PERCENT */
+.percent {
+    margin-top: 10px;
+    font-size: 1.2rem;
+}
+
+/* TIP */
+.tip {
+    margin-top: 25px;
+    font-size: 0.85rem;
+    opacity: 0.6;
+}
+
+/* ANIMATIONS */
+@keyframes glitch {
+    0% { transform: translate(0); }
+    20% { transform: translate(-2px, 2px); }
+    40% { transform: translate(2px, -2px); }
+    60% { transform: translate(-1px, 1px); }
+    80% { transform: translate(1px, -1px); }
+    100% { transform: translate(0); }
+}
+
+@keyframes flicker {
+    0%, 100% { opacity: 0.25; }
+    50% { opacity: 0.35; }
+}
