@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Grammar Learner | StudyZen</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/grammar-learner.css">
+</head>
+<body>
+
+<header>
+    <h1>📘 Grammar Learner</h1>
+    <p>Grammar + Spoken English</p>
+</header>
+
+<main class="grammar-box">
+    <h2 id="topic">Loading...</h2>
+    <p id="definition"></p>
+    <p id="rule"></p>
+
+    <ul id="examples"></ul>
+
+    <div class="lesson-controls">
+        <button id="startQuizBtn">Start Quiz ✅</button>
+        <button id="nextLessonBtn" onclick="nextLesson()">Skip & Next ➡️</button>
+    </div>
+
+    <!-- QUIZ AREA -->
+    <div id="quizArea" class="quiz-area" style="display:none;">
+        <h3 id="quizTitle">Quiz</h3>
+        <div id="questionBox"></div>
+        <div id="choicesBox"></div>
+        <p id="hintText" class="hint" style="display:none;"></p>
+
+        <div class="quiz-footer" style="display:none;" id="quizFooter">
+            <p id="scoreText"></p>
+            <button id="proceedBtn">Proceed to Next Lesson ➡️</button>
+            <button id="retryBtn">Retry Quiz 🔁</button>
+        </div>
+    </div>
+</main>
+
+<script src="../js/grammar-learner.js"></script>
+</body>
+</html>

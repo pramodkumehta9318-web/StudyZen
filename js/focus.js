@@ -1,86 +1,97 @@
-let focus = 25 * 60;
-let shortBreak = 5 * 60;
-let longBreak = 15 * 60;
+/* ===============================
+   🎯 FOCUS MODE + BRAIN WAVES
+=============================== */
 
-let time = focus;
-let timer = null;
-
-const display = document.getElementById("timer");
-const mode = document.getElementById("modeText");
-const info = document.getElementById("sessionInfo");
-
-const audio = document.getElementById("brainAudio");
+const timerEl = document.getElementById("timer");
+const startBtn = document.getElementById("startBtn");
+const pauseBtn = document.getElementById("pauseBtn");
+const resetBtn = document.getElementById("resetBtn");
+const modeText = document.getElementById("modeText");
+const sessionInfo = document.getElementById("sessionInfo");
 const waveSelect = document.getElementById("waveSelect");
+const brainAudio = document.getElementById("brainAudio");
 
-const waves = {
-    theta: "../assets/sounds/theta.mp3",
-    alpha: "../assets/sounds/alpha.mp3",
-    beta: "../assets/sounds/beta.mp3"
+let time = 25 * 60;
+let timer = null;
+let running = false;
+
+/* 🎧 Brain wave files */
+const waveFiles = {
+    theta: "../assets/theta.mp3",
+    alpha: "../assets/alpha.mp3",
+    beta: "../assets/beta.mp3"
 };
 
-display.innerText = format(time);
+/* ===============================
+   ⏱ TIMER FUNCTIONS
+=============================== */
 
-// ▶ START — AUDIO MUST PLAY HERE
-document.getElementById("startBtn").addEventListener("click", () => {
+function updateTimer() {
+    const min = Math.floor(time / 60);
+    const sec = time % 60;
+    timerEl.textContent =
+        `${min.toString().padStart(2, "0")}:${sec.toString().padStart(2, "0")}`;
+}
 
-    // 🔥 THIS IS THE KEY LINE
-    audio.src = waves[waveSelect.value];
-    audio.volume = 0.4;
-    audio.play();   // ✅ guaranteed (user click)
+startBtn.addEventListener("click", () => {
+    if (running) return;
 
-    if (timer) return;
+    running = true;
+    startBrainWave();
+    document.body.classList.add("focus-active");
 
     timer = setInterval(() => {
         time--;
+        updateTimer();
+
         if (time <= 0) {
-            switchMode();
-        } else {
-            display.innerText = format(time);
+            clearInterval(timer);
+            stopBrainWave();
+            sessionInfo.textContent = "✅ Session Complete!";
         }
     }, 1000);
-
-    info.innerText = "Brain waves active 🧠";
 });
 
-// ⏸ PAUSE
-document.getElementById("pauseBtn").addEventListener("click", () => {
+pauseBtn.addEventListener("click", () => {
     clearInterval(timer);
-    timer = null;
-    audio.pause();
-    info.innerText = "Paused ⏸";
+    running = false;
+    stopBrainWave();
+    document.body.classList.remove("focus-active");
 });
 
-// 🔁 RESET
-document.getElementById("resetBtn").addEventListener("click", () => {
+resetBtn.addEventListener("click", () => {
     clearInterval(timer);
-    timer = null;
-    audio.pause();
-    time = focus;
-    mode.innerText = "Study Time 📘";
-    display.innerText = format(time);
-    info.innerText = "Reset done";
+    running = false;
+    time = 25 * 60;
+    updateTimer();
+    stopBrainWave();
+    sessionInfo.textContent = "Select wave & start focus 🔥";
+    document.body.classList.remove("focus-active");
 });
 
-function switchMode() {
-    clearInterval(timer);
-    timer = null;
-    audio.pause();
+/* ===============================
+   🧠 BRAIN WAVE SYSTEM
+=============================== */
 
-    if (mode.innerText.includes("Study")) {
-        time = shortBreak;
-        mode.innerText = "Short Break ☕";
-        info.innerText = "Break time";
-    } else {
-        time = focus;
-        mode.innerText = "Study Time 📘";
-        info.innerText = "Back to focus";
+function startBrainWave() {
+    const wave = waveSelect.value;
+    brainAudio.src = waveFiles[wave];
+    brainAudio.volume = 0.35; // safe & calm
+    brainAudio.play().catch(() => {});
+    sessionInfo.textContent = `🧠 ${wave.toUpperCase()} wave active`;
+}
+
+function stopBrainWave() {
+    brainAudio.pause();
+    brainAudio.currentTime = 0;
+}
+
+/* change wave while running */
+waveSelect.addEventListener("change", () => {
+    if (running) {
+        startBrainWave();
     }
+});
 
-    display.innerText = format(time);
-}
-
-function format(sec) {
-    const m = Math.floor(sec / 60);
-    const s = sec % 60;
-    return `${m}:${s.toString().padStart(2, "0")}`;
-}
+/* init */
+updateTimer();

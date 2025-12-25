@@ -1,98 +1,135 @@
-/* 🔹 RESET */
+/* ===============================
+   STUDYZEN – WINTER THEME
+   MAIN STYLE
+=============================== */
+
 * {
-    margin: 0;
-    padding: 0;
     box-sizing: border-box;
-    font-family: 'Poppins', sans-serif;
 }
 
-/* 🔹 BODY */
 body {
-    min-height: 100vh;
-    background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+    margin: 0;
+    font-family: 'Poppins', sans-serif;
+    background: linear-gradient(180deg, #0b1d33, #123c5a);
     color: #ffffff;
-    padding: 20px;
 }
 
-/* 🔹 THEME TOGGLE */
-.theme-toggle {
-    position: fixed;
-    top: 20px;
-    right: 20px;
-    background: rgba(255, 255, 255, 0.15);
-    padding: 10px 14px;
-    border-radius: 50%;
-    cursor: pointer;
-    backdrop-filter: blur(10px);
-    transition: 0.3s;
+/* 🔥 ALL CONTENT ABOVE SNOW */
+header,
+main,
+section,
+.dashboard {
+    position: relative;
+    z-index: 5;
 }
 
-.theme-toggle:hover {
-    background: rgba(255, 255, 255, 0.25);
-}
-
-/* 🔹 HEADER */
+/* 🔷 HEADER */
 header {
     text-align: center;
-    margin-bottom: 40px;
+    padding: 25px 10px;
 }
 
 header h1 {
-    font-size: 2.5rem;
-    font-weight: 600;
+    margin: 0;
+    font-size: 28px;
 }
 
 header p {
     opacity: 0.8;
-    margin-top: 8px;
+    font-size: 14px;
 }
 
-/* 🔹 DASHBOARD GRID */
+/* 🧊 DASHBOARD GRID */
 .dashboard {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-    gap: 25px;
+    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    gap: 16px;
+    padding: 20px;
 }
 
-/* 🔹 GLASS CARD */
+/* ❄️ CARDS */
 .card {
     background: rgba(255, 255, 255, 0.12);
-    border-radius: 20px;
-    padding: 30px 20px;
+    backdrop-filter: blur(10px);
+    border-radius: 18px;
+    padding: 20px;
     text-align: center;
     text-decoration: none;
-    color: #ffffff;
-    backdrop-filter: blur(15px);
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    transition: transform 0.3s ease, background 0.3s ease;
+    color: #fff;
+    transition: all 0.25s ease;
 }
 
-.card:hover {
-    transform: translateY(-10px);
-    background: rgba(255, 255, 255, 0.18);
-}
-
-/* 🔹 ICON */
 .card i {
-    font-size: 2.5rem;
-    margin-bottom: 15px;
-    color: #00ffd5;
+    font-size: 28px;
+    margin-bottom: 10px;
 }
 
-/* 🔹 CARD TEXT */
 .card h3 {
-    font-size: 1.3rem;
-    margin-bottom: 8px;
+    margin: 8px 0 4px;
+    font-size: 16px;
 }
 
 .card p {
-    font-size: 0.9rem;
-    opacity: 0.85;
+    font-size: 12px;
+    opacity: 0.75;
 }
 
-/* 🔹 RESPONSIVE */
-@media (max-width: 600px) {
-    header h1 {
-        font-size: 2rem;
-    }
+.card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 12px 30px rgba(0,0,0,0.35);
+}
+
+/* 🎓 LEARNER CARD SAME SIZE */
+.learner-card {
+    min-height: 150px;
+}
+
+/* 🔘 BUTTONS */
+button {
+    background: linear-gradient(135deg, #5dade2, #aed6f1);
+    color: #002b45;
+    border: none;
+    padding: 10px 22px;
+    border-radius: 25px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+button:hover {
+    opacity: 0.9;
+}
+
+/* 🧠 INPUTS */
+input, textarea {
+    width: 100%;
+    padding: 10px;
+    border-radius: 12px;
+    border: none;
+    outline: none;
+    font-family: inherit;
+}
+
+/* 🌙 THEME TOGGLE */
+.theme-toggle,
+.music-toggle {
+    position: fixed;
+    right: 15px;
+    background: rgba(255,255,255,0.15);
+    backdrop-filter: blur(8px);
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    z-index: 10;
+}
+
+.theme-toggle {
+    top: 15px;
+}
+
+.music-toggle {
+    top: 70px;
 }

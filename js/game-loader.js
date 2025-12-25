@@ -39,7 +39,7 @@ const loader = setInterval(() => {
         tip.innerText = "Welcome back, warrior.";
 
         setTimeout(() => {
-            window.location.href = "index.html";
+            window.location.href = "homepage.html";
         }, 1200);
     }
 

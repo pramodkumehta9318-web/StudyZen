@@ -27,9 +27,31 @@
     </div>
 
     <!-- 🎵 Music Toggle -->
-    <div class="music-toggle">
-        <i class="fas fa-music"></i>
-    </div>
+    <!-- 🎵 Music Toggle -->
+<div class="music-toggle" id="musicToggle" style="cursor:pointer;">
+    <i class="fas fa-music"></i>
+</div>
+
+<audio id="bgMusic" src="assets/slava.mp3" ></audio>
+
+<script>
+    const musicToggle = document.getElementById('musicToggle');
+    const bgMusic = document.getElementById('bgMusic');
+    let isPlaying = false;
+
+    musicToggle.addEventListener('click', () => {
+        if(!isPlaying){
+            bgMusic.play();
+            isPlaying = true;
+            musicToggle.style.color = '#4caf50'; // Green when playing
+        } else {
+            bgMusic.play();
+            isPlaying = true;
+            musicToggle.style.color = '#000'; // Default color when paused
+        }
+    });
+</script>
+
 
     <!-- 🔷 Header -->
     <header>
@@ -76,9 +98,20 @@
             <h3>Math Learner</h3>
             <p>Formulas, Tricks & Examples</p>
         </a>
+        <!-- 🏛️ History Learner Button -->
+<a href="pages/history-learner.html" class="card">
+    <i class="fas fa-landmark"></i>
+    <h3>History Learner</h3>
+    <p>From Ancient India to Modern India</p>
+</a>
+<!-- 📘 Grammar Learner Button -->
+<a href="pages/grammar-learner.html" class="card">
+    <i class="fas fa-language"></i>
+    <h3>Grammar Learner</h3>
+    <p>Grammar + Spoken English</p>
+</a>
 
-    </main>
-
+ 
     <!-- 🤖 STUDYZEN AI -->
     <section class="dashboard">
         <div class="card" style="max-width:520px;margin:auto;">

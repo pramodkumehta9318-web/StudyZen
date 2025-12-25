@@ -8,77 +8,127 @@
 <link rel="stylesheet" href="../css/dark.css">
 <link rel="stylesheet" href="../css/animations.css">
 <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+<style>
+/* Collapsible Cards */
+.collapsible {
+  background-color: #1e1e2f;
+  color: #fff;
+  cursor: pointer;
+  padding: 15px 20px;
+  width: 100%;
+  border: none;
+  text-align: left;
+  outline: none;
+  font-size: 18px;
+  margin-bottom: 5px;
+  border-radius: 8px;
+  transition: 0.3s;
+}
+
+.collapsible:hover {
+  background-color: #2a2a45;
+}
+
+.active, .collapsible:after {
+  font-weight: bold;
+}
+
+.content {
+  padding: 0 20px;
+  display: none;
+  overflow: hidden;
+  background-color: rgba(255,255,255,0.05);
+  border-radius: 0 0 8px 8px;
+  margin-bottom: 10px;
+}
+</style>
 </head>
 <body>
 
 <header>
     <h1>🏛️ History Learner</h1>
-    <p>India’s History: Ancient to Modern</p>
+    <p>From Ancient India to Modern India</p>
 </header>
 
 <main class="dashboard">
 
-    <!-- Ancient India -->
-    <section class="card">
-        <h3>🗿 Ancient India (c. 7000 BCE – 320 CE)</h3>
-        <ul>
-            <li>Indus Valley Civilization (Harappa, Mohenjo-Daro)</li>
-            <li>Vedic Period: Rigveda, Social Structure, Kingship</li>
-            <li>Mahajanapadas & Rise of Magadha</li>
-            <li>Mauryan Empire: Chandragupta, Ashoka, Spread of Buddhism</li>
-            <li>Gupta Empire: Golden Age, Science, Arts, Literature</li>
-        </ul>
-    </section>
+<!-- Ancient India -->
+<button class="collapsible">🗿 Ancient India (c. 7000 BCE – 320 CE)</button>
+<div class="content">
+  <ul>
+    <li><b>Indus Valley Civilization:</b> Harappa, Mohenjo-Daro, Trade, Urban Planning, Writing</li>
+    <li><b>Vedic Period:</b> Rigveda, Social Structure (Varna), Kingship, Religion</li>
+    <li><b>Mahajanapadas:</b> 16 kingdoms, rise of Magadha</li>
+    <li><b>Mauryan Empire:</b> Chandragupta, Ashoka, Spread of Buddhism</li>
+    <li><b>Gupta Empire:</b> Golden Age, Science (Aryabhata), Literature, Arts</li>
+  </ul>
+</div>
 
-    <!-- Medieval India -->
-    <section class="card">
-        <h3>🏰 Medieval India (c. 320 CE – 1526 CE)</h3>
-        <ul>
-            <li>Post-Gupta Regional Kingdoms</li>
-            <li>Harsha & Rajput Kingdoms</li>
-            <li>Delhi Sultanate: Slave, Khilji, Tughlaq, Lodi Dynasties</li>
-            <li>Culture: Indo-Islamic Architecture, Sufism</li>
-        </ul>
-    </section>
+<!-- Medieval India -->
+<button class="collapsible">🏰 Medieval India (c. 320 CE – 1526 CE)</button>
+<div class="content">
+  <ul>
+    <li>Post-Gupta regional kingdoms</li>
+    <li>Harsha & Rajput Kingdoms</li>
+    <li>Delhi Sultanate: Slave, Khilji, Tughlaq, Lodi Dynasties</li>
+    <li>Culture: Indo-Islamic Architecture, Sufism</li>
+  </ul>
+</div>
 
-    <!-- Mughal Era -->
-    <section class="card">
-        <h3>🏯 Mughal Empire (1526 – 1757)</h3>
-        <ul>
-            <li>Babur, Humayun, Akbar, Jahangir, Shah Jahan, Aurangzeb</li>
-            <li>Administration: Mansabdari System, Revenue</li>
-            <li>Culture: Miniature Painting, Architecture (Taj Mahal)</li>
-            <li>Decline & Regional Kingdoms Rise</li>
-        </ul>
-    </section>
+<!-- Mughal Empire -->
+<button class="collapsible">🏯 Mughal Empire (1526 – 1757)</button>
+<div class="content">
+  <ul>
+    <li>Babur, Humayun, Akbar, Jahangir, Shah Jahan, Aurangzeb</li>
+    <li>Administration: Mansabdari System, Revenue</li>
+    <li>Culture: Miniature Painting, Architecture (Taj Mahal)</li>
+    <li>Decline & rise of regional kingdoms</li>
+  </ul>
+</div>
 
-    <!-- Colonial India -->
-    <section class="card">
-        <h3>🇬🇧 British India (1757 – 1947)</h3>
-        <ul>
-            <li>British East India Company Rule, Battle of Plassey</li>
-            <li>1857 Revolt: Causes & Effects</li>
-            <li>British Policies: Economic Drain, Land Revenue Systems</li>
-            <li>Social & Religious Reformers: Raja Ram Mohan Roy, Vivekananda</li>
-            <li>Freedom Movement: Indian National Congress, Gandhi, Non-Cooperation, Quit India</li>
-            <li>Partition of Bengal, Swadeshi Movement, Revolutions</li>
-        </ul>
-    </section>
+<!-- Colonial India -->
+<button class="collapsible">🇬🇧 British India (1757 – 1947)</button>
+<div class="content">
+  <ul>
+    <li>East India Company, Battle of Plassey, Subsidiary Alliance</li>
+    <li>1857 Revolt: Causes & Effects</li>
+    <li>British Policies: Land Revenue, Economic Drain</li>
+    <li>Social Reformers: Raja Ram Mohan Roy, Vivekananda</li>
+    <li>Freedom Movement: Indian National Congress, Gandhi, Non-Cooperation, Quit India</li>
+    <li>Revolutions & Movements: Partition of Bengal, Swadeshi Movement</li>
+  </ul>
+</div>
 
-    <!-- Modern India -->
-    <section class="card">
-        <h3>🇮🇳 Independent India (1947 – Present)</h3>
-        <ul>
-            <li>Partition & Independence, 1947</li>
-            <li>Constitution of India, 1950</li>
-            <li>Major Leaders: Nehru, Indira Gandhi, Rajiv Gandhi</li>
-            <li>Wars: 1947, 1962, 1965, 1971, Kargil 1999</li>
-            <li>Economic Reforms 1991, Technology & IT Revolution</li>
-            <li>Contemporary India: Politics, Education, Science & Space</li>
-        </ul>
-    </section>
+<!-- Modern India -->
+<button class="collapsible">🇮🇳 Independent India (1947 – Present)</button>
+<div class="content">
+  <ul>
+    <li>Partition & Independence (1947)</li>
+    <li>Constitution of India (1950)</li>
+    <li>Major Leaders: Nehru, Indira Gandhi, Rajiv Gandhi</li>
+    <li>Wars: 1947, 1962, 1965, 1971, Kargil 1999</li>
+    <li>Economic Reforms: 1991, IT & Technology Growth</li>
+    <li>Contemporary India: Politics, Education, Science & Space</li>
+  </ul>
+</div>
 
 </main>
+
+<script>
+// Collapsible functionality
+const coll = document.getElementsByClassName("collapsible");
+for (let i = 0; i < coll.length; i++) {
+  coll[i].addEventListener("click", function() {
+    this.classList.toggle("active");
+    let content = this.nextElementSibling;
+    if (content.style.display === "block") {
+      content.style.display = "none";
+    } else {
+      content.style.display = "block";
+    }
+  });
+}
+</script>
 
 <script src="../js/app.js"></script>
 </body>
