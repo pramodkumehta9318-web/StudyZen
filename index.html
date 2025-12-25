@@ -16,10 +16,12 @@
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/dark.css">
     <link rel="stylesheet" href="css/animations.css">
-  
 </head>
 
 <body>
+
+    <!-- ❄️ Snow Layer (Background only) -->
+    <div class="snow"></div>
 
     <!-- 🌙 Dark Mode Toggle -->
     <div class="theme-toggle">
@@ -27,31 +29,12 @@
     </div>
 
     <!-- 🎵 Music Toggle -->
-    <!-- 🎵 Music Toggle -->
-<div class="music-toggle" id="musicToggle" style="cursor:pointer;">
-    <i class="fas fa-music"></i>
-</div>
+    <div class="music-toggle" id="musicToggle">
+        <i class="fas fa-music"></i>
+    </div>
 
-<audio id="bgMusic" src="assets/slava.mp3" ></audio>
-
-<script>
-    const musicToggle = document.getElementById('musicToggle');
-    const bgMusic = document.getElementById('bgMusic');
-    let isPlaying = false;
-
-    musicToggle.addEventListener('click', () => {
-        if(!isPlaying){
-            bgMusic.play();
-            isPlaying = true;
-            musicToggle.style.color = '#4caf50'; // Green when playing
-        } else {
-            bgMusic.play();
-            isPlaying = true;
-            musicToggle.style.color = '#000'; // Default color when paused
-        }
-    });
-</script>
-
+    <!-- 🎧 Background Music (NO AUTOPLAY) -->
+    <audio id="bgMusic" src="bgmusic/slava.mp3" loop></audio>
 
     <!-- 🔷 Header -->
     <header>
@@ -92,94 +75,17 @@
             <p>Smart Pomodoro</p>
         </a>
 
-        <!-- 🧮 Math Learner Button -->
-        <a href="pages/math-learner.html" class="card">
-            <i class="fas fa-square-root-alt"></i>
-            <h3>Math Learner</h3>
-            <p>Formulas, Tricks & Examples</p>
+        <a href="pages/learner-tools.html" class="card learner-card">
+            <i class="fas fa-graduation-cap"></i>
+            <h3>Learner Tools</h3>
+            <p>Math • Grammar • History</p>
         </a>
-        <!-- 🏛️ History Learner Button -->
-<a href="pages/history-learner.html" class="card">
-    <i class="fas fa-landmark"></i>
-    <h3>History Learner</h3>
-    <p>From Ancient India to Modern India</p>
-</a>
-<!-- 📘 Grammar Learner Button -->
-<a href="pages/grammar-learner.html" class="card">
-    <i class="fas fa-language"></i>
-    <h3>Grammar Learner</h3>
-    <p>Grammar + Spoken English</p>
-</a>
 
- 
-    <!-- 🤖 STUDYZEN AI -->
-    <section class="dashboard">
-        <div class="card" style="max-width:520px;margin:auto;">
-            <h3>🤖 StudyZen AI</h3>
+    </main>
 
-            <div id="aiMessages"
-                 style="height:220px;overflow-y:auto;
-                 background:rgba(255,255,255,0.1);
-                 padding:10px;border-radius:10px;margin-bottom:10px;">
-            </div>
-
-            <input id="aiInput" placeholder="Ask StudyZen AI..." />
-            <br><br>
-            <button onclick="sendAI()">Send</button>
-
-            <p style="font-size:12px;opacity:0.7;">
-                Try: “Aaj kya padhna chahiye”, “Pomodoro start karo”
-            </p>
-        </div>
-    </section>
-
-    <!-- 🧠 MANUAL AI INPUT -->
-    <section class="dashboard">
-        <div class="card" style="max-width:520px;margin:auto;">
-            <h3>🧠 Manual AI Input</h3>
-
-            <textarea id="manualReason"
-                placeholder="Apna situation likho (e.g. Kal bimaar tha, exam aa raha hai)"
-                style="width:100%;height:80px;"></textarea>
-
-            <br><br>
-            <button onclick="saveManualReason()">Include in AI Analysis</button>
-
-            <p style="font-size:12px;opacity:0.7;">
-                Ye AI decision me include hoga
-            </p>
-        </div>
-    </section>
-
-    <!-- 🔌 JS FILES (ORDER IS VERY IMPORTANT) -->
+    <!-- 🔌 JS -->
     <script src="js/app.js"></script>
-    <script src="js/studyzen-ai.js"></script>
 
-    <!-- 🧠 Intelligence Engines -->
-    <script src="js/risk-engine.js"></script>
-    <script src="js/daily-mission.js"></script>
-    <script src="js/mission-explainer.js"></script>
-    <script src="js/voice-ai.js"></script>
-    <script src="js/manual-ai.js"></script>
-    <script src="js/adaptive-engine.js"></script>
-
-    <!-- 🚨 AUTO INTELLIGENCE -->
-    <script>
-        showRiskAlert();
-        showDailyMission();
-
-        setTimeout(() => explainMission(), 600);
-        setTimeout(() => explainMissionWithVoice(), 1400);
-
-        applyAdaptiveMode();
-    </script>
-
-    <!-- 📦 PWA SERVICE WORKER -->
-    <script>
-        if ("serviceWorker" in navigator) {
-            navigator.serviceWorker.register("service-worker.js");
-        }
-    </script>
-
+</html>
 </body>
 </html>
