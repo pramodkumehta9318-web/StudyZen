@@ -17,9 +17,9 @@ let running = false;
 
 /* 🎧 Brain wave files */
 const waveFiles = {
-    theta: "../assets/theta.mp3",
-    alpha: "../assets/alpha.mp3",
-    beta: "../assets/beta.mp3"
+    theta: "../bgmusic/theta.mp3",
+    alpha: "../bgmusic/alpha.mp3",
+    beta: "../bgmusic/beta.mp3"
 };
 
 /* ===============================

@@ -1,94 +1,247 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>Focus Mode | StudyZen</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="UTF-8">
+<title>StudyZen | Focus Mode</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <!-- Fonts & Icons -->
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-
-    <!-- CSS -->
-    <link rel="stylesheet" href="../css/style.css">
-    <link rel="stylesheet" href="../css/dark.css">
-    <link rel="stylesheet" href="../css/animations.css">
-
-    <style>
-        .focus-container {
-            max-width: 420px;
-            margin: auto;
-            text-align: center;
-        }
-
-        .timer {
-            font-size: 3rem;
-            margin: 20px 0;
-        }
-
-        .focus-buttons button {
-            margin: 6px;
-            padding: 10px 16px;
-        }
-
-        select {
-            padding: 8px;
-            border-radius: 6px;
-            margin-top: 10px;
-        }
-    </style>
+<style>
+body{
+  margin:0;
+  font-family:Poppins,sans-serif;
+  background:linear-gradient(135deg,#0f2027,#203a43,#2c5364);
+  color:#fff;
+  text-align:center;
+}
+.card{
+  margin:15px;
+  padding:20px;
+  border-radius:20px;
+  background:rgba(255,255,255,0.1);
+  backdrop-filter:blur(12px);
+}
+.badge{font-size:60px}
+.timer{font-size:42px;margin:10px}
+button{
+  padding:12px 30px;
+  border:none;
+  border-radius:30px;
+  font-weight:bold;
+  background:gold;
+  cursor:pointer;
+}
+button:disabled{opacity:.5}
+ul{list-style:none;padding:0}
+li{
+  display:flex;
+  justify-content:space-between;
+  padding:10px;
+  margin:6px;
+  border-radius:12px;
+  background:rgba(255,255,255,0.12);
+}
+.me{border:2px solid gold}
+.rank-up{
+  position:fixed;
+  inset:0;
+  display:none;
+  align-items:center;
+  justify-content:center;
+  background:rgba(0,0,0,0.85);
+  z-index:999;
+}
+.rank-box{
+  padding:30px;
+  border-radius:20px;
+  background:linear-gradient(135deg,gold,orange);
+  color:black;
+  animation:zoom .6s ease;
+}
+@keyframes zoom{
+  from{transform:scale(.3)}
+  to{transform:scale(1)}
+}
+</style>
 </head>
 
 <body>
 
-    <!-- 🌙 Theme Toggle -->
-    <div class="theme-toggle">
-        <i class="fas fa-moon"></i>
-    </div>
+<h2>🎯 Focus Mode v1.2</h2>
 
-    <!-- 🔙 Back -->
-    <a href="../index.html" style="text-decoration:none;color:white;">
-        ← Back to Dashboard
-    </a>
+<div class="card">
+  <div class="badge" id="badge">🥉</div>
+  <h2 id="rank">Bronze</h2>
+  XP: <span id="xp">0</span>
+</div>
 
-    <!-- 🎯 Header -->
-    <header>
-        <h1>🎯 Focus Mode</h1>
-        <p>Pomodoro • Brain Waves • Deep Study</p>
-    </header>
+<div class="card">
+  <div class="timer" id="timer">20:00</div>
+  <button id="startBtn" onclick="startFocus()">▶ Start Focus</button>
+</div>
 
-    <!-- 🧊 Focus Area -->
-    <main class="dashboard">
-        <div class="card focus-container">
+<div class="card">
+  <h3>🏆 Leaderboard</h3>
+  <ul id="leaderboard"></ul>
+</div>
 
-            <h3 id="modeText">Study Time 📘</h3>
-            <div class="timer" id="timer">25:00</div>
+<div class="rank-up" id="rankUp">
+  <div class="rank-box">
+    <h1>🔥 RANK UP</h1>
+    <h2 id="newRank"></h2>
+  </div>
+</div>
 
-            <div class="focus-buttons">
-                <button id="startBtn">▶ Start</button>
-                <button id="pauseBtn">⏸ Pause</button>
-                <button id="resetBtn">🔁 Reset</button>
-            </div>
+<script>
+/* ===== CONFIG ===== */
+const SESSION_TIME = 20 * 60;
+const XP_PER_SESSION = 50;
 
-            <!-- 🧠 Brain Wave Selector -->
-            <p style="margin-top:12px;">🧠 Brain Wave</p>
-            <select id="waveSelect">
-                <option value="theta">Theta (Deep Focus)</option>
-                <option value="alpha">Alpha (Calm Study)</option>
-                <option value="beta">Beta (High Alert)</option>
-            </select>
+/* ===== RANKS ===== */
+const ranks = [
+ {name:"Bronze",xp:0,badge:"🥉"},
+ {name:"Silver",xp:300,badge:"🥈"},
+ {name:"Gold",xp:700,badge:"🥇"},
+ {name:"Platinum",xp:1200,badge:"💎"},
+ {name:"The Master",xp:2000,badge:"🔥"},
+ {name:"The Topper",xp:3200,badge:"👑"}
+];
 
-            <p id="sessionInfo">Select wave & start focus 🔥</p>
+/* ===== USER DATA ===== */
+let xp = +localStorage.getItem("focusXP") || 0;
+let lastRank = localStorage.getItem("rank") || "Bronze";
 
-        </div>
-    </main>
+/* ===== TIMER ===== */
+let timeLeft = SESSION_TIME;
+let interval = null;
 
-    <!-- 🎧 AUDIO -->
-    <audio id="brainAudio" loop></audio>
+/* ===== BOTS (PERSISTENT) ===== */
+let bots = JSON.parse(localStorage.getItem("bots")) || [
+ {name:"Ravi",xp:120},
+ {name:"Anu",xp:180},
+ {name:"Kunal",xp:260},
 
-    <!-- JS -->
-    <script src="../js/app.js"></script>
-    <script src="../js/focus.js"></script>
+ {name:"Sneha",xp:350},
+ {name:"Rahul",xp:480},
+ {name:"Pooja",xp:650},
+
+ {name:"Aman",xp:760},
+ {name:"Neha",xp:940},
+ {name:"Vikas",xp:1100},
+
+ {name:"Arjun",xp:1350},
+ {name:"Meena",xp:1650},
+
+ {name:"Dev",xp:2300},
+
+ {name:"platinum",xp:3200} // only topper
+];
+
+/* ===== UTIL ===== */
+function formatTime(sec){
+ let m=Math.floor(sec/60), s=sec%60;
+ return m+":"+(s<10?"0":"")+s;
+}
+function getRank(x){
+ return ranks.reduce((a,b)=>x>=b.xp?b:a);
+}
+function rand(min,max){
+ return Math.floor(Math.random()*(max-min+1))+min;
+}
+function todayKey(){
+ const d=new Date();
+ return d.getFullYear()+"-"+(d.getMonth()+1)+"-"+d.getDate();
+}
+
+/* ===== BOT DAILY GROWTH ===== */
+function growBotsDaily(){
+ const today=todayKey();
+ const lastDay=localStorage.getItem("botDay");
+ if(lastDay===today) return;
+
+ bots.forEach(bot=>{
+  if(bot.name==="🔥 Legend") return;
+
+  let gain=0;
+  if(bot.xp<300) gain=rand(10,25);
+  else if(bot.xp<700) gain=rand(15,30);
+  else if(bot.xp<1200) gain=rand(20,40);
+  else if(bot.xp<2000) gain=rand(25,50);
+  else gain=rand(30,60);
+
+  bot.xp+=gain;
+ });
+
+ localStorage.setItem("botDay",today);
+ localStorage.setItem("bots",JSON.stringify(bots));
+}
+
+/* ===== UI ===== */
+function updateUI(animate=false){
+ growBotsDaily();
+
+ const r=getRank(xp);
+ badge.innerText=r.badge;
+ rank.innerText=r.name;
+ xpSpan.innerText=xp;
+
+ if(animate && r.name!==lastRank){
+  rankUp.style.display="flex";
+  newRank.innerText=r.name;
+  setTimeout(()=>rankUp.style.display="none",2000);
+ }
+
+ lastRank=r.name;
+ localStorage.setItem("rank",lastRank);
+ localStorage.setItem("focusXP",xp);
+
+ loadLeaderboard();
+}
+
+/* ===== FOCUS TIMER ===== */
+function startFocus(){
+ startBtn.disabled=true;
+ interval=setInterval(()=>{
+  timeLeft--;
+  timer.innerText=formatTime(timeLeft);
+
+  if(timeLeft<=0){
+   clearInterval(interval);
+   xp+=XP_PER_SESSION;
+   timeLeft=SESSION_TIME;
+   timer.innerText="20:00";
+   startBtn.disabled=false;
+   updateUI(true);
+  }
+ },1000);
+}
+
+/* ===== LEADERBOARD ===== */
+function loadLeaderboard(){
+ let players=[...bots,{name:"You",xp:xp,me:true}];
+ players.sort((a,b)=>b.xp-a.xp);
+
+ leaderboard.innerHTML="";
+ players.forEach((p,i)=>{
+  leaderboard.innerHTML+=`
+   <li class="${p.me?'me':''}">
+    #${i+1} ${p.name}
+    <span>${p.xp} XP</span>
+   </li>`;
+ });
+}
+
+/* ===== INIT ===== */
+const badge=document.getElementById("badge");
+const rank=document.getElementById("rank");
+const xpSpan=document.getElementById("xp");
+const timer=document.getElementById("timer");
+const startBtn=document.getElementById("startBtn");
+const leaderboard=document.getElementById("leaderboard");
+const rankUp=document.getElementById("rankUp");
+const newRank=document.getElementById("newRank");
+
+updateUI();
+</script>
 
 </body>
 </html>
