@@ -8,7 +8,7 @@
 <style>
 body{
   margin:0;
-  font-family:Poppins,sans-serif;
+  font-family:Poppins,system-ui;
   background:linear-gradient(135deg,#0f2027,#203a43,#2c5364);
   color:#fff;
   text-align:center;
@@ -16,67 +16,75 @@ body{
 .card{
   margin:15px;
   padding:20px;
-  border-radius:20px;
-  background:rgba(255,255,255,0.1);
-  backdrop-filter:blur(12px);
-}
-.badge{font-size:60px}
-.timer{font-size:42px;margin:10px}
-button{
-  padding:12px 30px;
-  border:none;
-  border-radius:30px;
-  font-weight:bold;
-  background:gold;
-  cursor:pointer;
-}
-button:disabled{opacity:.5}
-ul{list-style:none;padding:0}
-li{
-  display:flex;
-  justify-content:space-between;
-  padding:10px;
-  margin:6px;
-  border-radius:12px;
+  border-radius:18px;
   background:rgba(255,255,255,0.12);
 }
+.timer{font-size:42px;margin:10px}
+button{
+  padding:12px 28px;
+  border:none;
+  border-radius:30px;
+  background:gold;
+  font-weight:700;
+}
+button:disabled{opacity:.6}
+ul{list-style:none;padding:0}
+li{
+  margin:6px;
+  padding:10px;
+  border-radius:12px;
+  background:rgba(255,255,255,0.15);
+  display:flex;
+  justify-content:space-between;
+}
 .me{border:2px solid gold}
-.rank-up{
+.bot{opacity:.9}
+
+/* 🔥 POPUP */
+#namePopup{
   position:fixed;
   inset:0;
-  display:none;
+  background:rgba(0,0,0,.85);
+  display:flex;
   align-items:center;
   justify-content:center;
-  background:rgba(0,0,0,0.85);
   z-index:999;
 }
-.rank-box{
-  padding:30px;
-  border-radius:20px;
-  background:linear-gradient(135deg,gold,orange);
-  color:black;
-  animation:zoom .6s ease;
+.popupBox{
+  background:#1e2f3a;
+  padding:25px;
+  border-radius:18px;
+  width:90%;
+  max-width:320px;
 }
-@keyframes zoom{
-  from{transform:scale(.3)}
-  to{transform:scale(1)}
+input{
+  width:100%;
+  padding:12px;
+  border-radius:10px;
+  border:none;
+  margin-top:10px;
 }
 </style>
 </head>
 
 <body>
 
-<h2>🎯 Focus Mode v1.2</h2>
-
-<div class="card">
-  <div class="badge" id="badge">🥉</div>
-  <h2 id="rank">Bronze</h2>
-  XP: <span id="xp">0</span>
+<!-- 🔥 NAME POPUP -->
+<div id="namePopup">
+  <div class="popupBox">
+    <h3>👤 Enter Your Name</h3>
+    <input id="nameInput" placeholder="Your Name" maxlength="15">
+    <br><br>
+    <button id="saveName">Continue</button>
+  </div>
 </div>
 
+<h2>🎯 StudyZen Focus Mode</h2>
+
 <div class="card">
+  <h3>Your XP: <span id="xp">0</span></h3>
   <div class="timer" id="timer">20:00</div>
-  <button id="startBtn" onclick="startFocus()">▶ Start Focus</button>
+  <button id="startBtn">▶ Start Focus</button>
 </div>
 
 <div class="card">
@@ -84,163 +92,140 @@ li{
   <ul id="leaderboard"></ul>
 </div>
 
-<div class="rank-up" id="rankUp">
-  <div class="rank-box">
-    <h1>🔥 RANK UP</h1>
-    <h2 id="newRank"></h2>
-  </div>
-</div>
+<script type="module">
 
-<script>
-/* ===== CONFIG ===== */
-const SESSION_TIME = 20 * 60;
-const XP_PER_SESSION = 50;
+/* 🔥 IMPORTS */
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-app.js";
+import {
+  getFirestore, doc, getDoc, setDoc, updateDoc,
+  collection, getDocs
+} from "https://www.gstatic.com/firebasejs/10.7.0/firebase-firestore.js";
 
-/* ===== RANKS ===== */
-const ranks = [
- {name:"Bronze",xp:0,badge:"🥉"},
- {name:"Silver",xp:300,badge:"🥈"},
- {name:"Gold",xp:700,badge:"🥇"},
- {name:"Platinum",xp:1200,badge:"💎"},
- {name:"The Master",xp:2000,badge:"🔥"},
- {name:"The Topper",xp:3200,badge:"👑"}
+/* 🔥 BOTS */
+const bots = [
+  {name:"Ravi 🤖",xp:300,isBot:true},
+  {name:"Anu 🤖",xp:520,isBot:true},
+  {name:"Kunal 🤖",xp:740,isBot:true},
+  {name:"Sneha 🤖",xp:980,isBot:true},
+  {name:"Rahul 🤖",xp:1400,isBot:true},
+  {name:"🔥 Legend 🤖",xp:2600,isBot:true},
+  {name:"👑 The Master 🤖",xp:4200,isBot:true}
 ];
 
-/* ===== USER DATA ===== */
-let xp = +localStorage.getItem("focusXP") || 0;
-let lastRank = localStorage.getItem("rank") || "Bronze";
+/* 🔥 FIREBASE CONFIG */
+const firebaseConfig = {
+  apiKey: "AIzaSyB9GexNnSX_5sBxSUgHJj9ufSqLeH2wNp0",
+  authDomain: "studyzen-server.firebaseapp.com",
+  projectId: "studyzen-server",
+};
 
-/* ===== TIMER ===== */
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
+
+/* 🔥 ELEMENTS */
+const leaderboardEl = document.getElementById("leaderboard");
+const xpEl = document.getElementById("xp");
+const timerEl = document.getElementById("timer");
+const startBtn = document.getElementById("startBtn");
+const popup = document.getElementById("namePopup");
+const nameInput = document.getElementById("nameInput");
+const saveNameBtn = document.getElementById("saveName");
+
+let username = localStorage.getItem("studyzen_name");
+let xp = 0;
+
+const SESSION_TIME = 20*60;
+const XP_PER_SESSION = 50;
 let timeLeft = SESSION_TIME;
 let interval = null;
 
-/* ===== BOTS (PERSISTENT) ===== */
-let bots = JSON.parse(localStorage.getItem("bots")) || [
- {name:"Ravi",xp:120},
- {name:"Anu",xp:180},
- {name:"Kunal",xp:260},
-
- {name:"Sneha",xp:350},
- {name:"Rahul",xp:480},
- {name:"Pooja",xp:650},
-
- {name:"Aman",xp:760},
- {name:"Neha",xp:940},
- {name:"Vikas",xp:1100},
-
- {name:"Arjun",xp:1350},
- {name:"Meena",xp:1650},
-
- {name:"Dev",xp:2300},
-
- {name:"platinum",xp:3200} // only topper
-];
-
-/* ===== UTIL ===== */
-function formatTime(sec){
- let m=Math.floor(sec/60), s=sec%60;
- return m+":"+(s<10?"0":"")+s;
-}
-function getRank(x){
- return ranks.reduce((a,b)=>x>=b.xp?b:a);
-}
-function rand(min,max){
- return Math.floor(Math.random()*(max-min+1))+min;
-}
-function todayKey(){
- const d=new Date();
- return d.getFullYear()+"-"+(d.getMonth()+1)+"-"+d.getDate();
+/* 🔥 POPUP LOGIC */
+if(username){
+  popup.style.display="none";
+  initUser();
 }
 
-/* ===== BOT DAILY GROWTH ===== */
-function growBotsDaily(){
- const today=todayKey();
- const lastDay=localStorage.getItem("botDay");
- if(lastDay===today) return;
+saveNameBtn.onclick = ()=>{
+  if(nameInput.value.trim().length<3) return alert("Min 3 characters");
+  username = nameInput.value.trim();
+  localStorage.setItem("studyzen_name",username);
+  popup.style.display="none";
+  initUser();
+};
 
- bots.forEach(bot=>{
-  if(bot.name==="🔥 Legend") return;
+/* 🔥 INIT USER */
+async function initUser(){
+  const ref = doc(db,"users",username);
+  const snap = await getDoc(ref);
 
-  let gain=0;
-  if(bot.xp<300) gain=rand(10,25);
-  else if(bot.xp<700) gain=rand(15,30);
-  else if(bot.xp<1200) gain=rand(20,40);
-  else if(bot.xp<2000) gain=rand(25,50);
-  else gain=rand(30,60);
-
-  bot.xp+=gain;
- });
-
- localStorage.setItem("botDay",today);
- localStorage.setItem("bots",JSON.stringify(bots));
-}
-
-/* ===== UI ===== */
-function updateUI(animate=false){
- growBotsDaily();
-
- const r=getRank(xp);
- badge.innerText=r.badge;
- rank.innerText=r.name;
- xpSpan.innerText=xp;
-
- if(animate && r.name!==lastRank){
-  rankUp.style.display="flex";
-  newRank.innerText=r.name;
-  setTimeout(()=>rankUp.style.display="none",2000);
- }
-
- lastRank=r.name;
- localStorage.setItem("rank",lastRank);
- localStorage.setItem("focusXP",xp);
-
- loadLeaderboard();
-}
-
-/* ===== FOCUS TIMER ===== */
-function startFocus(){
- startBtn.disabled=true;
- interval=setInterval(()=>{
-  timeLeft--;
-  timer.innerText=formatTime(timeLeft);
-
-  if(timeLeft<=0){
-   clearInterval(interval);
-   xp+=XP_PER_SESSION;
-   timeLeft=SESSION_TIME;
-   timer.innerText="20:00";
-   startBtn.disabled=false;
-   updateUI(true);
+  if(!snap.exists()){
+    await setDoc(ref,{xp:0});
+    xp=0;
+  }else{
+    xp=snap.data().xp;
   }
- },1000);
+
+  xpEl.innerText=xp;
+  loadLeaderboard();
+
+  /* 🔁 POLLING every 2 sec */
+  setInterval(loadLeaderboard,2000);
 }
 
-/* ===== LEADERBOARD ===== */
-function loadLeaderboard(){
- let players=[...bots,{name:"You",xp:xp,me:true}];
- players.sort((a,b)=>b.xp-a.xp);
+/* 🔥 LOAD LEADERBOARD */
+async function loadLeaderboard(){
+  const snapAll = await getDocs(collection(db,"users"));
+  let real=[];
 
- leaderboard.innerHTML="";
- players.forEach((p,i)=>{
-  leaderboard.innerHTML+=`
-   <li class="${p.me?'me':''}">
-    #${i+1} ${p.name}
-    <span>${p.xp} XP</span>
-   </li>`;
- });
+  snapAll.forEach(d=>{
+    real.push({
+      name:d.id+" 👤",
+      xp:Number(d.data().xp),
+      me:d.id===username
+    });
+  });
+
+  const merged=[...real,...bots].sort((a,b)=>b.xp-a.xp);
+  render(merged);
 }
 
-/* ===== INIT ===== */
-const badge=document.getElementById("badge");
-const rank=document.getElementById("rank");
-const xpSpan=document.getElementById("xp");
-const timer=document.getElementById("timer");
-const startBtn=document.getElementById("startBtn");
-const leaderboard=document.getElementById("leaderboard");
-const rankUp=document.getElementById("rankUp");
-const newRank=document.getElementById("newRank");
+function render(list){
+  leaderboardEl.innerHTML="";
+  list.forEach((p,i)=>{
+    leaderboardEl.innerHTML+=`
+      <li class="${p.isBot?'bot':''} ${p.me?'me':''}">
+        #${i+1} ${p.name}
+        <span>${p.xp} XP</span>
+      </li>`;
+  });
+}
 
-updateUI();
+function format(s){
+  let m=Math.floor(s/60),sec=s%60;
+  return m+":"+(sec<10?"0":"")+sec;
+}
+
+/* 🔥 TIMER */
+startBtn.onclick=()=>{
+  startBtn.disabled=true;
+  interval=setInterval(async()=>{
+    timeLeft--;
+    timerEl.innerText=format(timeLeft);
+
+    if(timeLeft<=0){
+      clearInterval(interval);
+      timeLeft=SESSION_TIME;
+      timerEl.innerText="20:00";
+      startBtn.disabled=false;
+
+      xp+=XP_PER_SESSION;
+      xpEl.innerText=xp;
+      await updateDoc(doc(db,"users",username),{xp});
+      loadLeaderboard(); // immediate refresh
+    }
+  },1000);
+};
+
 </script>
 
 </body>
