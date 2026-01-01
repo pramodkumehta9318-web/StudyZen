@@ -1,91 +1,22 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>StudyZen | Smart Student App</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <!-- PWA -->
-    <link rel="manifest" href="manifest.json">
-
-    <!-- Fonts & Icons -->
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-
-    <!-- CSS -->
-    <link rel="stylesheet" href="css/style.css">
-    <link rel="stylesheet" href="css/dark.css">
-    <link rel="stylesheet" href="css/animations.css">
+<meta charset="UTF-8">
+<title>AS Studios</title>
+<link rel="stylesheet" href="style.css">
 </head>
-
 <body>
 
-    <!-- ❄️ Snow Layer (Background only) -->
-    <div class="snow"></div>
+<div class="loader-container">
+  <img src="AS studios.png" class="logo" alt="AS Studios Logo">
 
-    <!-- 🌙 Dark Mode Toggle -->
-    <div class="theme-toggle">
-        <i class="fas fa-moon"></i>
-    </div>
+  <div class="loading-box">
+    <div class="loading-bar" id="loadingBar"></div>
+  </div>
 
-    <!-- 🎵 Music Toggle -->
-    <div class="music-toggle" id="musicToggle">
-        <i class="fas fa-music"></i>
-    </div>
+  <p class="loading-text">Loading...</p>
+</div>
 
-    <!-- 🎧 Background Music (NO AUTOPLAY) -->
-    <audio id="bgMusic" src="bgmusic/slava.mp3" loop></audio>
-
-    <!-- 🔷 Header -->
-    <header>
-        <h1>📘 StudyZen</h1>
-        <p>AI • Focus • Productivity • Discipline</p>
-    </header>
-
-    <!-- 🧊 Dashboard -->
-    <main class="dashboard">
-
-        <a href="pages/planner.html" class="card">
-            <i class="fas fa-book"></i>
-            <h3>Study Planner</h3>
-            <p>Plan daily study</p>
-        </a>
-
-        <a href="pages/todo.html" class="card">
-            <i class="fas fa-check-circle"></i>
-            <h3>Smart To-Do</h3>
-            <p>Tasks & priorities</p>
-        </a>
-
-        <a href="pages/expense.html" class="card">
-            <i class="fas fa-wallet"></i>
-            <h3>Expense Tracker</h3>
-            <p>Money + charts</p>
-        </a>
-
-        <a href="pages/tools.html" class="card">
-            <i class="fas fa-calculator"></i>
-            <h3>Quick Tools</h3>
-            <p>Daily calculators</p>
-        </a>
-
-        <a href="pages/focus.html" class="card">
-            <i class="fas fa-clock"></i>
-            <h3>Focus Mode</h3>
-            <p>Smart Pomodoro</p>
-        </a>
-
-        <a href="pages/learner-tools.html" class="card learner-card">
-            <i class="fas fa-graduation-cap"></i>
-            <h3>Learner Tools</h3>
-            <p>Math • Grammar • History</p>
-        </a>
-
-    </main>
-
-    <!-- 🔌 JS -->
-    <script src="js/app.js"></script>
-
-</html>
+<script src="loadings/script.js"></script>
 </body>
 </html>

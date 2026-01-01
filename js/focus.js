@@ -1,97 +1,86 @@
-/* ===============================
-   🎯 FOCUS MODE + BRAIN WAVES
-=============================== */
+let focus = 25 * 60;
+let shortBreak = 5 * 60;
+let longBreak = 15 * 60;
 
-const timerEl = document.getElementById("timer");
-const startBtn = document.getElementById("startBtn");
-const pauseBtn = document.getElementById("pauseBtn");
-const resetBtn = document.getElementById("resetBtn");
-const modeText = document.getElementById("modeText");
-const sessionInfo = document.getElementById("sessionInfo");
-const waveSelect = document.getElementById("waveSelect");
-const brainAudio = document.getElementById("brainAudio");
-
-let time = 25 * 60;
+let time = focus;
 let timer = null;
-let running = false;
 
-/* 🎧 Brain wave files */
-const waveFiles = {
-    theta: "../bgmusic/theta.mp3",
-    alpha: "../bgmusic/alpha.mp3",
-    beta: "../bgmusic/beta.mp3"
+const display = document.getElementById("timer");
+const mode = document.getElementById("modeText");
+const info = document.getElementById("sessionInfo");
+
+const audio = document.getElementById("brainAudio");
+const waveSelect = document.getElementById("waveSelect");
+
+const waves = {
+    theta: "../assets/sounds/theta.mp3",
+    alpha: "../assets/sounds/alpha.mp3",
+    beta: "../assets/sounds/beta.mp3"
 };
 
-/* ===============================
-   ⏱ TIMER FUNCTIONS
-=============================== */
+display.innerText = format(time);
 
-function updateTimer() {
-    const min = Math.floor(time / 60);
-    const sec = time % 60;
-    timerEl.textContent =
-        `${min.toString().padStart(2, "0")}:${sec.toString().padStart(2, "0")}`;
-}
+// ▶ START — AUDIO MUST PLAY HERE
+document.getElementById("startBtn").addEventListener("click", () => {
 
-startBtn.addEventListener("click", () => {
-    if (running) return;
+    // 🔥 THIS IS THE KEY LINE
+    audio.src = waves[waveSelect.value];
+    audio.volume = 0.4;
+    audio.play();   // ✅ guaranteed (user click)
 
-    running = true;
-    startBrainWave();
-    document.body.classList.add("focus-active");
+    if (timer) return;
 
     timer = setInterval(() => {
         time--;
-        updateTimer();
-
         if (time <= 0) {
-            clearInterval(timer);
-            stopBrainWave();
-            sessionInfo.textContent = "✅ Session Complete!";
+            switchMode();
+        } else {
+            display.innerText = format(time);
         }
     }, 1000);
+
+    info.innerText = "Brain waves active 🧠";
 });
 
-pauseBtn.addEventListener("click", () => {
+// ⏸ PAUSE
+document.getElementById("pauseBtn").addEventListener("click", () => {
     clearInterval(timer);
-    running = false;
-    stopBrainWave();
-    document.body.classList.remove("focus-active");
+    timer = null;
+    audio.pause();
+    info.innerText = "Paused ⏸";
 });
 
-resetBtn.addEventListener("click", () => {
+// 🔁 RESET
+document.getElementById("resetBtn").addEventListener("click", () => {
     clearInterval(timer);
-    running = false;
-    time = 25 * 60;
-    updateTimer();
-    stopBrainWave();
-    sessionInfo.textContent = "Select wave & start focus 🔥";
-    document.body.classList.remove("focus-active");
+    timer = null;
+    audio.pause();
+    time = focus;
+    mode.innerText = "Study Time 📘";
+    display.innerText = format(time);
+    info.innerText = "Reset done";
 });
 
-/* ===============================
-   🧠 BRAIN WAVE SYSTEM
-=============================== */
+function switchMode() {
+    clearInterval(timer);
+    timer = null;
+    audio.pause();
 
-function startBrainWave() {
-    const wave = waveSelect.value;
-    brainAudio.src = waveFiles[wave];
-    brainAudio.volume = 0.35; // safe & calm
-    brainAudio.play().catch(() => {});
-    sessionInfo.textContent = `🧠 ${wave.toUpperCase()} wave active`;
-}
-
-function stopBrainWave() {
-    brainAudio.pause();
-    brainAudio.currentTime = 0;
-}
-
-/* change wave while running */
-waveSelect.addEventListener("change", () => {
-    if (running) {
-        startBrainWave();
+    if (mode.innerText.includes("Study")) {
+        time = shortBreak;
+        mode.innerText = "Short Break ☕";
+        info.innerText = "Break time";
+    } else {
+        time = focus;
+        mode.innerText = "Study Time 📘";
+        info.innerText = "Back to focus";
     }
-});
 
-/* init */
-updateTimer();
+    display.innerText = format(time);
+}
+
+function format(sec) {
+    const m = Math.floor(sec / 60);
+    const s = sec % 60;
+    return `${m}:${s.toString().padStart(2, "0")}`;
+}

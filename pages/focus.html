@@ -1,232 +1,73 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<title>StudyZen | Focus Mode</title>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8">
+    <title>Focus Mode | StudyZen</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<style>
-body{
-  margin:0;
-  font-family:Poppins,system-ui;
-  background:linear-gradient(135deg,#0f2027,#203a43,#2c5364);
-  color:#fff;
-  text-align:center;
-}
-.card{
-  margin:15px;
-  padding:20px;
-  border-radius:18px;
-  background:rgba(255,255,255,0.12);
-}
-.timer{font-size:42px;margin:10px}
-button{
-  padding:12px 28px;
-  border:none;
-  border-radius:30px;
-  background:gold;
-  font-weight:700;
-}
-button:disabled{opacity:.6}
-ul{list-style:none;padding:0}
-li{
-  margin:6px;
-  padding:10px;
-  border-radius:12px;
-  background:rgba(255,255,255,0.15);
-  display:flex;
-  justify-content:space-between;
-}
-.me{border:2px solid gold}
-.bot{opacity:.9}
+    <!-- Fonts & Icons -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 
-/* 🔥 POPUP */
-#namePopup{
-  position:fixed;
-  inset:0;
-  background:rgba(0,0,0,.85);
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  z-index:999;
-}
-.popupBox{
-  background:#1e2f3a;
-  padding:25px;
-  border-radius:18px;
-  width:90%;
-  max-width:320px;
-}
-input{
-  width:100%;
-  padding:12px;
-  border-radius:10px;
-  border:none;
-  margin-top:10px;
-}
-</style>
+    <!-- CSS -->
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/dark.css">
+    <link rel="stylesheet" href="../css/animations.css">
+
+    <style>
+        .focus-container {
+            max-width: 400px;
+            margin: auto;
+            text-align: center;
+        }
+
+        .timer {
+            font-size: 3rem;
+            margin: 20px 0;
+        }
+
+        .focus-buttons button {
+            margin: 8px;
+        }
+    </style>
 </head>
-
 <body>
 
-<!-- 🔥 NAME POPUP -->
-<div id="namePopup">
-  <div class="popupBox">
-    <h3>👤 Enter Your Name</h3>
-    <input id="nameInput" placeholder="Your Name" maxlength="15">
-    <br><br>
-    <button id="saveName">Continue</button>
-  </div>
-</div>
+    <!-- 🌙 Theme Toggle -->
+    <div class="theme-toggle">
+        <i class="fas fa-moon"></i>
+    </div>
 
-<h2>🎯 StudyZen Focus Mode</h2>
+    <!-- 🔙 Back -->
+    <a href="../index.html" style="text-decoration:none;color:white;">
+        ← Back to Dashboard
+    </a>
 
-<div class="card">
-  <h3>Your XP: <span id="xp">0</span></h3>
-  <div class="timer" id="timer">20:00</div>
-  <button id="startBtn">▶ Start Focus</button>
-</div>
+    <!-- 🎯 Header -->
+    <header>
+        <h1>🎯 Focus Mode</h1>
+        <p>Pomodoro • No distraction • Deep study</p>
+    </header>
 
-<div class="card">
-  <h3>🏆 Leaderboard</h3>
-  <ul id="leaderboard"></ul>
-</div>
+    <!-- 🧊 Focus Area -->
+    <main class="dashboard">
+        <div class="card focus-container">
+            <h3 id="modeText">Study Time</h3>
+            <div class="timer" id="timer">25:00</div>
 
-<script type="module">
+            <div class="focus-buttons">
+                <button id="startBtn">Start</button>
+                <button id="pauseBtn">Pause</button>
+                <button id="resetBtn">Reset</button>
+            </div>
 
-/* 🔥 IMPORTS */
-import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-app.js";
-import {
-  getFirestore, doc, getDoc, setDoc, updateDoc,
-  collection, getDocs
-} from "https://www.gstatic.com/firebasejs/10.7.0/firebase-firestore.js";
+            <p id="sessionInfo">Focus for 25 minutes</p>
+        </div>
+    </main>
 
-/* 🔥 BOTS */
-const bots = [
-  {name:"Ravi 🤖",xp:300,isBot:true},
-  {name:"Anu 🤖",xp:520,isBot:true},
-  {name:"Kunal 🤖",xp:740,isBot:true},
-  {name:"Sneha 🤖",xp:980,isBot:true},
-  {name:"Rahul 🤖",xp:1400,isBot:true},
-  {name:"🔥 Legend 🤖",xp:2600,isBot:true},
-  {name:"👑 The Master 🤖",xp:4200,isBot:true}
-];
-
-/* 🔥 FIREBASE CONFIG */
-const firebaseConfig = {
-  apiKey: "AIzaSyB9GexNnSX_5sBxSUgHJj9ufSqLeH2wNp0",
-  authDomain: "studyzen-server.firebaseapp.com",
-  projectId: "studyzen-server",
-};
-
-const app = initializeApp(firebaseConfig);
-const db = getFirestore(app);
-
-/* 🔥 ELEMENTS */
-const leaderboardEl = document.getElementById("leaderboard");
-const xpEl = document.getElementById("xp");
-const timerEl = document.getElementById("timer");
-const startBtn = document.getElementById("startBtn");
-const popup = document.getElementById("namePopup");
-const nameInput = document.getElementById("nameInput");
-const saveNameBtn = document.getElementById("saveName");
-
-let username = localStorage.getItem("studyzen_name");
-let xp = 0;
-
-const SESSION_TIME = 20*60;
-const XP_PER_SESSION = 50;
-let timeLeft = SESSION_TIME;
-let interval = null;
-
-/* 🔥 POPUP LOGIC */
-if(username){
-  popup.style.display="none";
-  initUser();
-}
-
-saveNameBtn.onclick = ()=>{
-  if(nameInput.value.trim().length<3) return alert("Min 3 characters");
-  username = nameInput.value.trim();
-  localStorage.setItem("studyzen_name",username);
-  popup.style.display="none";
-  initUser();
-};
-
-/* 🔥 INIT USER */
-async function initUser(){
-  const ref = doc(db,"users",username);
-  const snap = await getDoc(ref);
-
-  if(!snap.exists()){
-    await setDoc(ref,{xp:0});
-    xp=0;
-  }else{
-    xp=snap.data().xp;
-  }
-
-  xpEl.innerText=xp;
-  loadLeaderboard();
-
-  /* 🔁 POLLING every 2 sec */
-  setInterval(loadLeaderboard,2000);
-}
-
-/* 🔥 LOAD LEADERBOARD */
-async function loadLeaderboard(){
-  const snapAll = await getDocs(collection(db,"users"));
-  let real=[];
-
-  snapAll.forEach(d=>{
-    real.push({
-      name:d.id+" 👤",
-      xp:Number(d.data().xp),
-      me:d.id===username
-    });
-  });
-
-  const merged=[...real,...bots].sort((a,b)=>b.xp-a.xp);
-  render(merged);
-}
-
-function render(list){
-  leaderboardEl.innerHTML="";
-  list.forEach((p,i)=>{
-    leaderboardEl.innerHTML+=`
-      <li class="${p.isBot?'bot':''} ${p.me?'me':''}">
-        #${i+1} ${p.name}
-        <span>${p.xp} XP</span>
-      </li>`;
-  });
-}
-
-function format(s){
-  let m=Math.floor(s/60),sec=s%60;
-  return m+":"+(sec<10?"0":"")+sec;
-}
-
-/* 🔥 TIMER */
-startBtn.onclick=()=>{
-  startBtn.disabled=true;
-  interval=setInterval(async()=>{
-    timeLeft--;
-    timerEl.innerText=format(timeLeft);
-
-    if(timeLeft<=0){
-      clearInterval(interval);
-      timeLeft=SESSION_TIME;
-      timerEl.innerText="20:00";
-      startBtn.disabled=false;
-
-      xp+=XP_PER_SESSION;
-      xpEl.innerText=xp;
-      await updateDoc(doc(db,"users",username),{xp});
-      loadLeaderboard(); // immediate refresh
-    }
-  },1000);
-};
-
-</script>
+    <!-- JS -->
+    <script src="../js/app.js"></script>
+    <script src="../js/focus.js"></script>
 
 </body>
 </html>
